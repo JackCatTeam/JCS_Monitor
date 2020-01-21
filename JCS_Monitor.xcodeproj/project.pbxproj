@@ -8,6 +8,15 @@
 
 /* Begin PBXBuildFile section */
 		49716DF8B6A5AA9B98E793DD /* Pods_JCS_Monitor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F03DA5527D331B1CFAF49478 /* Pods_JCS_Monitor.framework */; };
+		7D19841623D6CFCC005AAE92 /* JCS_NetMonitorListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D19841523D6CFCC005AAE92 /* JCS_NetMonitorListCell.m */; };
+		7D19841923D6DF53005AAE92 /* JCS_NetMonitorDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D19841823D6DF53005AAE92 /* JCS_NetMonitorDetailVC.m */; };
+		7D19841E23D6E099005AAE92 /* JCS_NetMonitorDetailContentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D19841D23D6E099005AAE92 /* JCS_NetMonitorDetailContentVC.m */; };
+		7D19842123D6E0EC005AAE92 /* JCS_NetMonitorDetailHeaderView.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D19842023D6E0EC005AAE92 /* JCS_NetMonitorDetailHeaderView.m */; };
+		7D19842423D6E6C8005AAE92 /* JCS_NetMonitorDetailSinglePlainTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D19842323D6E6C8005AAE92 /* JCS_NetMonitorDetailSinglePlainTextCell.m */; };
+		7D19842723D6E735005AAE92 /* JCS_NetMonitorDetailRowsPlainTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D19842623D6E735005AAE92 /* JCS_NetMonitorDetailRowsPlainTextCell.m */; };
+		7D19842A23D6E756005AAE92 /* JCS_NetMonitorDetailHeaderFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D19842923D6E756005AAE92 /* JCS_NetMonitorDetailHeaderFieldCell.m */; };
+		7D19842E23D6E7B5005AAE92 /* JCS_NetMonitorRecordModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D19842D23D6E7B5005AAE92 /* JCS_NetMonitorRecordModel.m */; };
+		7D19843423D6E8B3005AAE92 /* JCS_NetMonitorDetailSingleArrowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D19843323D6E8B3005AAE92 /* JCS_NetMonitorDetailSingleArrowCell.m */; };
 		7D3E58FD23D6906A009D473F /* JCS_NetMonitorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D3E58FC23D6906A009D473F /* JCS_NetMonitorVC.m */; };
 		7D45A19323D68A6500FD2977 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D45A19223D68A6500FD2977 /* AppDelegate.m */; };
 		7D45A19623D68A6500FD2977 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D45A19523D68A6500FD2977 /* SceneDelegate.m */; };
@@ -20,6 +29,24 @@
 
 /* Begin PBXFileReference section */
 		79FB9EDDEB489AFA02B7A133 /* Pods-JCS_Monitor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JCS_Monitor.release.xcconfig"; path = "Target Support Files/Pods-JCS_Monitor/Pods-JCS_Monitor.release.xcconfig"; sourceTree = "<group>"; };
+		7D19841423D6CFCC005AAE92 /* JCS_NetMonitorListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_NetMonitorListCell.h; sourceTree = "<group>"; };
+		7D19841523D6CFCC005AAE92 /* JCS_NetMonitorListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_NetMonitorListCell.m; sourceTree = "<group>"; };
+		7D19841723D6DF53005AAE92 /* JCS_NetMonitorDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_NetMonitorDetailVC.h; sourceTree = "<group>"; };
+		7D19841823D6DF53005AAE92 /* JCS_NetMonitorDetailVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_NetMonitorDetailVC.m; sourceTree = "<group>"; };
+		7D19841C23D6E099005AAE92 /* JCS_NetMonitorDetailContentVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_NetMonitorDetailContentVC.h; sourceTree = "<group>"; };
+		7D19841D23D6E099005AAE92 /* JCS_NetMonitorDetailContentVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_NetMonitorDetailContentVC.m; sourceTree = "<group>"; };
+		7D19841F23D6E0EC005AAE92 /* JCS_NetMonitorDetailHeaderView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_NetMonitorDetailHeaderView.h; sourceTree = "<group>"; };
+		7D19842023D6E0EC005AAE92 /* JCS_NetMonitorDetailHeaderView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_NetMonitorDetailHeaderView.m; sourceTree = "<group>"; };
+		7D19842223D6E6C8005AAE92 /* JCS_NetMonitorDetailSinglePlainTextCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_NetMonitorDetailSinglePlainTextCell.h; sourceTree = "<group>"; };
+		7D19842323D6E6C8005AAE92 /* JCS_NetMonitorDetailSinglePlainTextCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_NetMonitorDetailSinglePlainTextCell.m; sourceTree = "<group>"; };
+		7D19842523D6E735005AAE92 /* JCS_NetMonitorDetailRowsPlainTextCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_NetMonitorDetailRowsPlainTextCell.h; sourceTree = "<group>"; };
+		7D19842623D6E735005AAE92 /* JCS_NetMonitorDetailRowsPlainTextCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_NetMonitorDetailRowsPlainTextCell.m; sourceTree = "<group>"; };
+		7D19842823D6E756005AAE92 /* JCS_NetMonitorDetailHeaderFieldCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_NetMonitorDetailHeaderFieldCell.h; sourceTree = "<group>"; };
+		7D19842923D6E756005AAE92 /* JCS_NetMonitorDetailHeaderFieldCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_NetMonitorDetailHeaderFieldCell.m; sourceTree = "<group>"; };
+		7D19842C23D6E7B5005AAE92 /* JCS_NetMonitorRecordModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_NetMonitorRecordModel.h; sourceTree = "<group>"; };
+		7D19842D23D6E7B5005AAE92 /* JCS_NetMonitorRecordModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_NetMonitorRecordModel.m; sourceTree = "<group>"; };
+		7D19843223D6E8B3005AAE92 /* JCS_NetMonitorDetailSingleArrowCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_NetMonitorDetailSingleArrowCell.h; sourceTree = "<group>"; };
+		7D19843323D6E8B3005AAE92 /* JCS_NetMonitorDetailSingleArrowCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_NetMonitorDetailSingleArrowCell.m; sourceTree = "<group>"; };
 		7D3E58FB23D6906A009D473F /* JCS_NetMonitorVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_NetMonitorVC.h; sourceTree = "<group>"; };
 		7D3E58FC23D6906A009D473F /* JCS_NetMonitorVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_NetMonitorVC.m; sourceTree = "<group>"; };
 		7D45A18E23D68A6500FD2977 /* JCS_Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JCS_Monitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,10 +77,59 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		7D19841A23D6E06D005AAE92 /* List */ = {
+			isa = PBXGroup;
+			children = (
+				7D3E58FB23D6906A009D473F /* JCS_NetMonitorVC.h */,
+				7D3E58FC23D6906A009D473F /* JCS_NetMonitorVC.m */,
+				7D19841423D6CFCC005AAE92 /* JCS_NetMonitorListCell.h */,
+				7D19841523D6CFCC005AAE92 /* JCS_NetMonitorListCell.m */,
+			);
+			path = List;
+			sourceTree = "<group>";
+		};
+		7D19841B23D6E07B005AAE92 /* Detail */ = {
+			isa = PBXGroup;
+			children = (
+				7D1C732323D714E70044E153 /* View */,
+				7D19841723D6DF53005AAE92 /* JCS_NetMonitorDetailVC.h */,
+				7D19841823D6DF53005AAE92 /* JCS_NetMonitorDetailVC.m */,
+				7D19841C23D6E099005AAE92 /* JCS_NetMonitorDetailContentVC.h */,
+				7D19841D23D6E099005AAE92 /* JCS_NetMonitorDetailContentVC.m */,
+			);
+			path = Detail;
+			sourceTree = "<group>";
+		};
+		7D19842B23D6E796005AAE92 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				7D19842C23D6E7B5005AAE92 /* JCS_NetMonitorRecordModel.h */,
+				7D19842D23D6E7B5005AAE92 /* JCS_NetMonitorRecordModel.m */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		7D1C732323D714E70044E153 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				7D19841F23D6E0EC005AAE92 /* JCS_NetMonitorDetailHeaderView.h */,
+				7D19842023D6E0EC005AAE92 /* JCS_NetMonitorDetailHeaderView.m */,
+				7D19842223D6E6C8005AAE92 /* JCS_NetMonitorDetailSinglePlainTextCell.h */,
+				7D19842323D6E6C8005AAE92 /* JCS_NetMonitorDetailSinglePlainTextCell.m */,
+				7D19843223D6E8B3005AAE92 /* JCS_NetMonitorDetailSingleArrowCell.h */,
+				7D19843323D6E8B3005AAE92 /* JCS_NetMonitorDetailSingleArrowCell.m */,
+				7D19842523D6E735005AAE92 /* JCS_NetMonitorDetailRowsPlainTextCell.h */,
+				7D19842623D6E735005AAE92 /* JCS_NetMonitorDetailRowsPlainTextCell.m */,
+				7D19842823D6E756005AAE92 /* JCS_NetMonitorDetailHeaderFieldCell.h */,
+				7D19842923D6E756005AAE92 /* JCS_NetMonitorDetailHeaderFieldCell.m */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
 		7D3E58F723D68D2D009D473F /* JCS_Monitor */ = {
 			isa = PBXGroup;
 			children = (
-				7D3E58FA23D6902C009D473F /* Controller */,
+				7D3E58FA23D6902C009D473F /* MonitorVC */,
 			);
 			path = JCS_Monitor;
 			sourceTree = "<group>";
@@ -76,13 +152,14 @@
 			name = Other;
 			sourceTree = "<group>";
 		};
-		7D3E58FA23D6902C009D473F /* Controller */ = {
+		7D3E58FA23D6902C009D473F /* MonitorVC */ = {
 			isa = PBXGroup;
 			children = (
-				7D3E58FB23D6906A009D473F /* JCS_NetMonitorVC.h */,
-				7D3E58FC23D6906A009D473F /* JCS_NetMonitorVC.m */,
+				7D19842B23D6E796005AAE92 /* Model */,
+				7D19841B23D6E07B005AAE92 /* Detail */,
+				7D19841A23D6E06D005AAE92 /* List */,
 			);
-			path = Controller;
+			path = MonitorVC;
 			sourceTree = "<group>";
 		};
 		7D45A18523D68A6500FD2977 = {
@@ -243,11 +320,20 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7D19842E23D6E7B5005AAE92 /* JCS_NetMonitorRecordModel.m in Sources */,
+				7D19842423D6E6C8005AAE92 /* JCS_NetMonitorDetailSinglePlainTextCell.m in Sources */,
+				7D19841923D6DF53005AAE92 /* JCS_NetMonitorDetailVC.m in Sources */,
+				7D19842A23D6E756005AAE92 /* JCS_NetMonitorDetailHeaderFieldCell.m in Sources */,
 				7D45A19923D68A6500FD2977 /* ViewController.m in Sources */,
+				7D19842123D6E0EC005AAE92 /* JCS_NetMonitorDetailHeaderView.m in Sources */,
+				7D19842723D6E735005AAE92 /* JCS_NetMonitorDetailRowsPlainTextCell.m in Sources */,
 				7D45A19323D68A6500FD2977 /* AppDelegate.m in Sources */,
 				7D45A1A423D68A6700FD2977 /* main.m in Sources */,
 				7D45A19623D68A6500FD2977 /* SceneDelegate.m in Sources */,
 				7D3E58FD23D6906A009D473F /* JCS_NetMonitorVC.m in Sources */,
+				7D19841623D6CFCC005AAE92 /* JCS_NetMonitorListCell.m in Sources */,
+				7D19843423D6E8B3005AAE92 /* JCS_NetMonitorDetailSingleArrowCell.m in Sources */,
+				7D19841E23D6E099005AAE92 /* JCS_NetMonitorDetailContentVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

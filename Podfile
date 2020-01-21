@@ -9,5 +9,6 @@ target 'JCS_Monitor' do
   pod 'JCS_Category', :path=>'/Users/yongping/Documents/Project/iOS_Project/StarCard/Frameworks/JCS_Category'
   pod 'JCS_Create', :path=>'/Users/yongping/Documents/Project/iOS_Project/StarCard/Frameworks/JCS_Create'
  
+  pod 'YLT_Kit','0.3.47'
 
 end

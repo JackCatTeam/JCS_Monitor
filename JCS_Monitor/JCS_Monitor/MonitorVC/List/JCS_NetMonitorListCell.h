@@ -7,10 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <JCS_Create/JCS_Create.h>
 
 NS_ASSUME_NONNULL_BEGIN
 
-@interface JCS_NetMonitorListCell : UITableViewCell
+@interface JCS_NetMonitorListCell : JCS_TableBaseCell
 
 @end
 

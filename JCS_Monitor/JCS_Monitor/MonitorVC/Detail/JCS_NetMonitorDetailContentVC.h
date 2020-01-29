@@ -12,6 +12,9 @@ NS_ASSUME_NONNULL_BEGIN
 
 @interface JCS_NetMonitorDetailContentVC : UIViewController
 
+- (void)configRequestData;
+- (void)configResponseData;
+
 @end
 
 NS_ASSUME_NONNULL_END

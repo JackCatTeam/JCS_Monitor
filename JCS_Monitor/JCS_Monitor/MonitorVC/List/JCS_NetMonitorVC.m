@@ -7,15 +7,18 @@
 //
 
 #import "JCS_NetMonitorVC.h"
+#import <ReactiveObjC/ReactiveObjC.h>
 #import <JCS_Create/JCS_Create.h>
 #import "JCS_NetMonitorListCell.h"
 #import "JCS_NetMonitorDetailVC.h"
 #import "JCS_NetMonitorDetailContentVC.h"
 
-@interface JCS_NetMonitorVC ()<UITableViewDelegate,UITableViewDataSource>
+@interface JCS_NetMonitorVC ()
 
 /** <#备注#> **/
 @property (nonatomic, strong) UITableView *tableView;
+/** <#备注#> **/
+@property (nonatomic, strong) NSMutableArray<JCS_TableSectionModel*> *sections;
 
 @end
 
@@ -29,7 +32,27 @@
 - (void)setupUI {
     self.view.jcs_randomBackgroundColor();
     
-    [UITableView jcs_create].jcs_layout(self.view, ^(MASConstraintMaker *make) {
+    @weakify(self)
+    
+    //导航栏
+    [JCS_MonitorNavBar jcs_create].jcs_layout(self.view, ^(MASConstraintMaker *make) {
+        make.left.right.top.mas_equalTo(0);
+        make.height.mas_equalTo(JCS_NAVIGATION_BAR_HEIGHT);
+    })
+    .jcs_whiteBackgroundColor()
+    .jcs_associated(&_navbar);
+    
+    [self.navbar.backSubject subscribeNext:^(id  _Nullable x) {
+        @strongify(self)
+        [self backhandler];
+    }];
+    
+    [RACObserve(self, title) subscribeNext:^(NSString *x) {
+        @strongify(self)
+        self.navbar.titleLabel.text = x;
+    }];
+    
+    [UITableView jcs_createPlainTableView].jcs_layout(self.view, ^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }).jcs_toTableView()
     .jcs_dataSource(self)
@@ -37,24 +60,42 @@
     .jcs_registerCellClass(@"JCS_NetMonitorListCell")
     .jcs_estimatedRowHeight(30)
     .jcs_separatorColorHex(0xD0D1D1)
+    .jcs_configSections(self.sections)
+    .jcs_configDidSelectRowBlock(^(NSIndexPath*indexPath,JCS_TableRowModel*model){
+        @strongify(self)
+        JCS_NetMonitorDetailContentVC *vc = [[JCS_NetMonitorDetailContentVC alloc] init];
+        [self.navigationController pushViewController:vc animated:YES];
+    })
     .jcs_associated(&_tableView);
     
 }
 
-#pragma mark - UITableViewDataSource
-
-- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return 10;
-}
-
-- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    JCS_NetMonitorListCell *cell = [JCS_NetMonitorListCell getCell:tableView indexPath:indexPath];
-    return cell;
-}
-
-- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
-    JCS_NetMonitorDetailContentVC *vc = [[JCS_NetMonitorDetailContentVC alloc] init];
-    [self.navigationController pushViewController:vc animated:YES];
+- (NSMutableArray<JCS_TableSectionModel *> *)sections {
+    if(!_sections){
+        _sections = [NSMutableArray array];
+        
+        //链接
+        JCS_TableSectionModel *section = [JCS_TableSectionModel jcs_create];
+        [_sections addObject:section];
+        for(int i=0;i<5;i++){
+            JCS_TableRowModel *row = [JCS_TableRowModel jcs_create];
+            row.data = @{
+        @"link":@"/banner/getList/banner/getList/banner/getList/banner/getList/banner/getList/banner/getList/banner/getList/banner/getList/banner/getList.action",
+            @"method":@"POST",
+        @"contentType":@"json",
+        @"status":@200,
+        @"agent":@"BlackCard",
+        @"host":@"api.jiakeniu.com",
+        @"time":@"2019-01-01 12:12:22"
+            };
+            row.cellClass = @"JCS_NetMonitorListCell";
+            row.cellHeight = 40;
+            row.clickRouter = @"jcs://MonitorRouter/showRequestDetail:?requestId=1111";
+            [section.rows addObject:row];
+        }
+        
+    }
+    return _sections;
 }
 
 @end

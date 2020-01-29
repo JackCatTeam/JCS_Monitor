@@ -7,10 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JCS_MonitorNavBar.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface JCS_NetMonitorVC : UIViewController
+
+/** 导航栏 **/
+@property (nonatomic, strong) JCS_MonitorNavBar *navbar;
+
+///返回按钮
+- (void)backhandler;
 
 @end
 

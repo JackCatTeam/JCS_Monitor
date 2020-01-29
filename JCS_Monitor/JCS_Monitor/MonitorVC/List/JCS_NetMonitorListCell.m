@@ -34,7 +34,6 @@
     self = [super initWithStyle:style reuseIdentifier:reuseIdentifier];
     if(self){
         [self setupUI];
-        [self bindingData];
     }
     return self;
 }
@@ -119,13 +118,23 @@
     });
 }
 
-- (void)bindingData{
-    self.linkLabel.text = @"/banner/getList/banner/getList/banner/getList/banner/getList/banner/getList/banner/getList/banner/getList/banner/getList/banner/getList.action";
-    self.mineTypeLabel.text = @"POST > json";
-    self.statusCodeLabel.text = @"200";
-    self.agentLabel.text = @"BlackCard";
-    self.hostLabel.text = @"api.jiakeniu.com";
-    self.timeLabel.text = @"2019-01-01 23:22:22";
+- (void)setData:(NSDictionary*)data {
+    [super setData:data];
+    
+    self.linkLabel.text = [data valueForKey:@"link"];
+    
+    self.statusCodeLabel.text = [NSString stringWithFormat:@"%@",[data valueForKey:@"status"]];
+    self.agentLabel.text = [data valueForKey:@"agent"];
+    self.hostLabel.text = [data valueForKey:@"host"];
+    self.timeLabel.text = [data valueForKey:@"time"];
+    
+    NSString *method = [data valueForKey:@"method"];
+    NSString *contentType = [data valueForKey:@"contentType"];
+    if(contentType.jcs_isBlank){
+        contentType = @"";
+    }
+    self.mineTypeLabel.text = [NSString stringWithFormat:@"%@ > %@",method,contentType];
+    
     self.imageIV.backgroundColor = [UIColor jcs_randomColor];
 }
 

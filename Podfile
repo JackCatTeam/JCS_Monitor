@@ -2,17 +2,20 @@
 platform :ios, '9.0'
 
 source 'https://cdn.cocoapods.org/'
+source 'https://gitee.com/devjackcat/JCS_PodSpecs.git'
+#source 'https://github.com/CocoaPods/Specs.git'
 
 use_frameworks!
 
 target 'JCS_Monitor' do
   
-  pod 'JCS_BaseLib', :path=>'/Users/yongping/Documents/Project/iOS_Project/StarCard/Frameworks/JCS_BaseLib'
-  pod 'JCS_Category', :path=>'/Users/yongping/Documents/Project/iOS_Project/StarCard/Frameworks/JCS_Category'
-  pod 'JCS_Create', :path=>'/Users/yongping/Documents/Project/iOS_Project/StarCard/Frameworks/JCS_Create'
+  pod 'JCS_BaseLib'
+  pod 'JCS_Category'
+  pod 'JCS_Create'
   pod 'JCS_Router'
   
   pod 'ReactiveObjC'
+  pod 'SDWebImage'
   #pod 'YLT_Kit'
 
 end

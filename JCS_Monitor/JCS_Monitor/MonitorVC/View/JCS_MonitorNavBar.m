@@ -36,7 +36,7 @@
     }).jcs_toButton()
     .jcs_enlargeEdge(10,10,10,10)
     .jcs_normalImageWithName(@"start_back")
-    .jcs_tapBlock(^{
+    .jcs_clickBlock(^(UIButton*sender){
         @strongify(self)
         [self.backSubject sendNext:nil];
     })

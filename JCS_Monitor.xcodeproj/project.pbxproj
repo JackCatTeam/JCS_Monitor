@@ -9,6 +9,10 @@
 /* Begin PBXBuildFile section */
 		49716DF8B6A5AA9B98E793DD /* Pods_JCS_Monitor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F03DA5527D331B1CFAF49478 /* Pods_JCS_Monitor.framework */; };
 		7D10465223E183950012D325 /* MonitorRouter.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D10465123E183950012D325 /* MonitorRouter.m */; };
+		7D10465C23E194B80012D325 /* JCS_RequestInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D10465623E194B80012D325 /* JCS_RequestInfo.m */; };
+		7D10466023E194EF0012D325 /* JCS_SessionConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D10465F23E194EF0012D325 /* JCS_SessionConfiguration.m */; };
+		7D10466323E195010012D325 /* JCS_URLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D10466223E195010012D325 /* JCS_URLProtocol.m */; };
+		7D10466A23E1990D0012D325 /* JCS_RequestStore.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D10466923E1990D0012D325 /* JCS_RequestStore.m */; };
 		7D19841623D6CFCC005AAE92 /* JCS_NetMonitorListCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D19841523D6CFCC005AAE92 /* JCS_NetMonitorListCell.m */; };
 		7D19841923D6DF53005AAE92 /* JCS_NetMonitorDetailVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D19841823D6DF53005AAE92 /* JCS_NetMonitorDetailVC.m */; };
 		7D19841E23D6E099005AAE92 /* JCS_NetMonitorDetailContentVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D19841D23D6E099005AAE92 /* JCS_NetMonitorDetailContentVC.m */; };
@@ -26,6 +30,7 @@
 		7D45A19E23D68A6700FD2977 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D45A19D23D68A6700FD2977 /* Assets.xcassets */; };
 		7D45A1A123D68A6700FD2977 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D45A19F23D68A6700FD2977 /* LaunchScreen.storyboard */; };
 		7D45A1A423D68A6700FD2977 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D45A1A323D68A6700FD2977 /* main.m */; };
+		7D70C44923E3FF5F00A80C63 /* JCS_RequestStore+MonitorDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D70C44823E3FF5F00A80C63 /* JCS_RequestStore+MonitorDataSource.m */; };
 		7D8C5A1123DAB1D300F57E51 /* JCS_MonitorNavBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8C5A1023DAB1D300F57E51 /* JCS_MonitorNavBar.m */; };
 /* End PBXBuildFile section */
 
@@ -33,6 +38,15 @@
 		79FB9EDDEB489AFA02B7A133 /* Pods-JCS_Monitor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JCS_Monitor.release.xcconfig"; path = "Target Support Files/Pods-JCS_Monitor/Pods-JCS_Monitor.release.xcconfig"; sourceTree = "<group>"; };
 		7D10465023E183950012D325 /* MonitorRouter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MonitorRouter.h; sourceTree = "<group>"; };
 		7D10465123E183950012D325 /* MonitorRouter.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MonitorRouter.m; sourceTree = "<group>"; };
+		7D10465623E194B80012D325 /* JCS_RequestInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JCS_RequestInfo.m; sourceTree = "<group>"; };
+		7D10465823E194B80012D325 /* JCS_RequestInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCS_RequestInfo.h; sourceTree = "<group>"; };
+		7D10465A23E194B80012D325 /* JCSNetMonitorMacros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JCSNetMonitorMacros.h; sourceTree = "<group>"; };
+		7D10465E23E194EF0012D325 /* JCS_SessionConfiguration.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_SessionConfiguration.h; sourceTree = "<group>"; };
+		7D10465F23E194EF0012D325 /* JCS_SessionConfiguration.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_SessionConfiguration.m; sourceTree = "<group>"; };
+		7D10466123E195010012D325 /* JCS_URLProtocol.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_URLProtocol.h; sourceTree = "<group>"; };
+		7D10466223E195010012D325 /* JCS_URLProtocol.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_URLProtocol.m; sourceTree = "<group>"; };
+		7D10466823E1990D0012D325 /* JCS_RequestStore.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_RequestStore.h; sourceTree = "<group>"; };
+		7D10466923E1990D0012D325 /* JCS_RequestStore.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_RequestStore.m; sourceTree = "<group>"; };
 		7D19841423D6CFCC005AAE92 /* JCS_NetMonitorListCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_NetMonitorListCell.h; sourceTree = "<group>"; };
 		7D19841523D6CFCC005AAE92 /* JCS_NetMonitorListCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_NetMonitorListCell.m; sourceTree = "<group>"; };
 		7D19841723D6DF53005AAE92 /* JCS_NetMonitorDetailVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_NetMonitorDetailVC.h; sourceTree = "<group>"; };
@@ -65,6 +79,8 @@
 		7D45A1A023D68A6700FD2977 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7D45A1A223D68A6700FD2977 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D45A1A323D68A6700FD2977 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7D70C44723E3FF5F00A80C63 /* JCS_RequestStore+MonitorDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JCS_RequestStore+MonitorDataSource.h"; sourceTree = "<group>"; };
+		7D70C44823E3FF5F00A80C63 /* JCS_RequestStore+MonitorDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "JCS_RequestStore+MonitorDataSource.m"; sourceTree = "<group>"; };
 		7D8C5A0F23DAB1D300F57E51 /* JCS_MonitorNavBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_MonitorNavBar.h; sourceTree = "<group>"; };
 		7D8C5A1023DAB1D300F57E51 /* JCS_MonitorNavBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_MonitorNavBar.m; sourceTree = "<group>"; };
 		92395A054C4B43932B697031 /* Pods-JCS_Monitor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JCS_Monitor.debug.xcconfig"; path = "Target Support Files/Pods-JCS_Monitor/Pods-JCS_Monitor.debug.xcconfig"; sourceTree = "<group>"; };
@@ -90,6 +106,55 @@
 				7D10465123E183950012D325 /* MonitorRouter.m */,
 			);
 			path = Router;
+			sourceTree = "<group>";
+		};
+		7D10465323E194910012D325 /* URLProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				7D10465A23E194B80012D325 /* JCSNetMonitorMacros.h */,
+				7D10466623E1964C0012D325 /* JCS_RequestInfo */,
+				7D10466523E196200012D325 /* JCS_URLProtocol */,
+				7D10466423E196130012D325 /* JCS_SessionConfiguration */,
+			);
+			path = URLProtocol;
+			sourceTree = "<group>";
+		};
+		7D10466423E196130012D325 /* JCS_SessionConfiguration */ = {
+			isa = PBXGroup;
+			children = (
+				7D10465E23E194EF0012D325 /* JCS_SessionConfiguration.h */,
+				7D10465F23E194EF0012D325 /* JCS_SessionConfiguration.m */,
+			);
+			path = JCS_SessionConfiguration;
+			sourceTree = "<group>";
+		};
+		7D10466523E196200012D325 /* JCS_URLProtocol */ = {
+			isa = PBXGroup;
+			children = (
+				7D10466123E195010012D325 /* JCS_URLProtocol.h */,
+				7D10466223E195010012D325 /* JCS_URLProtocol.m */,
+			);
+			path = JCS_URLProtocol;
+			sourceTree = "<group>";
+		};
+		7D10466623E1964C0012D325 /* JCS_RequestInfo */ = {
+			isa = PBXGroup;
+			children = (
+				7D10465823E194B80012D325 /* JCS_RequestInfo.h */,
+				7D10465623E194B80012D325 /* JCS_RequestInfo.m */,
+			);
+			path = JCS_RequestInfo;
+			sourceTree = "<group>";
+		};
+		7D10466723E198FC0012D325 /* RequestStore */ = {
+			isa = PBXGroup;
+			children = (
+				7D10466823E1990D0012D325 /* JCS_RequestStore.h */,
+				7D10466923E1990D0012D325 /* JCS_RequestStore.m */,
+				7D70C44723E3FF5F00A80C63 /* JCS_RequestStore+MonitorDataSource.h */,
+				7D70C44823E3FF5F00A80C63 /* JCS_RequestStore+MonitorDataSource.m */,
+			);
+			path = RequestStore;
 			sourceTree = "<group>";
 		};
 		7D19841A23D6E06D005AAE92 /* List */ = {
@@ -144,6 +209,8 @@
 		7D3E58F723D68D2D009D473F /* JCS_Monitor */ = {
 			isa = PBXGroup;
 			children = (
+				7D10466723E198FC0012D325 /* RequestStore */,
+				7D10465323E194910012D325 /* URLProtocol */,
 				7D3E58FA23D6902C009D473F /* MonitorVC */,
 			);
 			path = JCS_Monitor;
@@ -352,8 +419,13 @@
 				7D10465223E183950012D325 /* MonitorRouter.m in Sources */,
 				7D19842A23D6E756005AAE92 /* JCS_NetMonitorDetailHeaderFieldCell.m in Sources */,
 				7D45A19923D68A6500FD2977 /* ViewController.m in Sources */,
+				7D10465C23E194B80012D325 /* JCS_RequestInfo.m in Sources */,
+				7D10466023E194EF0012D325 /* JCS_SessionConfiguration.m in Sources */,
 				7D19842123D6E0EC005AAE92 /* JCS_NetMonitorDetailHeaderView.m in Sources */,
+				7D10466323E195010012D325 /* JCS_URLProtocol.m in Sources */,
+				7D10466A23E1990D0012D325 /* JCS_RequestStore.m in Sources */,
 				7D19842723D6E735005AAE92 /* JCS_NetMonitorDetailRowsPlainTextCell.m in Sources */,
+				7D70C44923E3FF5F00A80C63 /* JCS_RequestStore+MonitorDataSource.m in Sources */,
 				7D45A19323D68A6500FD2977 /* AppDelegate.m in Sources */,
 				7D45A1A423D68A6700FD2977 /* main.m in Sources */,
 				7D45A19623D68A6500FD2977 /* SceneDelegate.m in Sources */,

@@ -30,5 +30,35 @@
 //    #endif
 }
 
+- (IBAction)post_json_json:(id)sender {
+    
+    NSURL *url = [NSURL URLWithString:@"/flyfish-pre/banner/getList.action" relativeToURL:[NSURL URLWithString:@"https://api.jiakeniu.com/"]];
+
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
+      cachePolicy:NSURLRequestUseProtocolCachePolicy
+      timeoutInterval:10.0];
+    NSDictionary *headers = @{
+      @"Content-Type": @"application/json"
+    };
+        [request setHTTPMethod:@"POST"];
+
+    [request setAllHTTPHeaderFields:headers];
+    NSData *postData = [[NSData alloc] initWithData:[@"{\n    \"type\":1\n}" dataUsingEncoding:NSUTF8StringEncoding]];
+    [request setHTTPBody:postData];
+
+    NSURLSession *session = [NSURLSession sharedSession];
+    NSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request
+    completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
+      if (error) {
+        NSLog(@"%@", error);
+      } else {
+        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+        NSError *parseError = nil;
+        NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
+        NSLog(@"%@",responseDictionary);
+      }
+    }];
+    [dataTask resume];
+}
 
 @end

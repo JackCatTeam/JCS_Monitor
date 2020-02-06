@@ -197,8 +197,7 @@ NSString *const kJCS_NetworkRecorderResponseCacheLimitDefaultsKey = @"com.JCS_.r
                 transaction.responseThumbnail = [JCS_NetworkUtility thumbnailedImageWithMaxPixelDimension:maxPixelDimension fromImageData:responseBody];
                 [self postUpdateNotificationForTransaction:transaction];
             });
-            //FIXME: 还可区分PNG、 JPEG、JPG等
-            transaction.shortMIMEType = @"image";
+            transaction.shortMIMEType = [mimeType stringByReplacingOccurrencesOfString:@"image/" withString:@""];
         }
         else if ([mimeType isEqual:@"application/json"]) {
             transaction.shortMIMEType = @"json";

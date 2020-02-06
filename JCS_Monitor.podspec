@@ -137,9 +137,6 @@ Pod::Spec.new do |s|
   # s.dependency "BLAPIManagers"
   # s.dependency "BLMediator"
   
-  s.dependency 'JCS_BaseLib'
-  s.dependency 'JCS_Category'
-  s.dependency 'JCS_Create'
-  s.dependency 'JCS_Router'
+  s.dependency 'JCS_Kit'
 
 end

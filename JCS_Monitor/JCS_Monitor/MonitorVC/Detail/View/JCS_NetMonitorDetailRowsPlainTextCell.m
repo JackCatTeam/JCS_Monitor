@@ -7,7 +7,7 @@
 //
 
 #import "JCS_NetMonitorDetailRowsPlainTextCell.h"
-#import <JCS_Create/JCS_Create.h>
+#import <JCS_Kit/JCS_Kit.h>
 
 @interface JCS_NetMonitorDetailRowsPlainTextCell()
 /** 标题 **/
@@ -30,6 +30,7 @@
         .jcs_textColorHex(0x222222)
         .jcs_numberOfLines(0)
         .jcs_associated(&_titleLabel);
+        
     }
     return self;
 }

@@ -9,13 +9,11 @@ use_frameworks!
 
 target 'JCS_Monitor' do
   
-  pod 'JCS_BaseLib'
-  pod 'JCS_Category'
-  pod 'JCS_Create'
-  pod 'JCS_Router'
+  pod 'JCS_Kit'
   
   pod 'ReactiveObjC'
   pod 'SDWebImage'
   #pod 'YLT_Kit'
+  pod 'FLEX', :configurations => ['Debug']
 
 end

@@ -7,8 +7,9 @@
 //
 
 #import "JCS_NetMonitorDetailVC.h"
-#import <JCS_Create/JCS_Create.h>
+#import <JCS_Kit/JCS_Kit.h>
 #import "JCS_NetMonitorDetailContentVC.h"
+#import "JCS_NetworkTransaction.h"
 
 @interface JCS_NetMonitorDetailVC ()
 
@@ -16,6 +17,8 @@
 
 @property (nonatomic, strong) JCS_NetMonitorDetailContentVC *requestVC;
 @property (nonatomic, strong) JCS_NetMonitorDetailContentVC *responseVC;
+
+@property (nonatomic, strong) JCS_NetworkTransaction *transaction;
 
 @end
 
@@ -46,15 +49,14 @@
         make.top.equalTo(self.segmentedControl.mas_bottom).mas_offset(8);
         make.bottom.mas_equalTo(-JCS_HOME_INDICATOR_HEIGHT);
     });
-    [self.requestVC configRequestData];
     
     //Response VC
     self.responseVC = [[JCS_NetMonitorDetailContentVC alloc] init];
+    self.responseVC.isResponse = YES;
     [self addChildViewController:self.responseVC];
     self.responseVC.view.jcs_layout(self.view, ^(MASConstraintMaker *make) {
         make.edges.equalTo(self.requestVC.view);
     }).jcs_hidden(YES);
-    [self.responseVC configResponseData];
     
     @weakify(self)
     [RACObserve(self.segmentedControl, selectedSegmentIndex) subscribeNext:^(id  _Nullable x) {
@@ -68,6 +70,13 @@
             self.responseVC.view.hidden = NO;
         }
     }];
+    
+    RAC(self.requestVC,transaction) = RACObserve(self, transaction);
+    RAC(self.responseVC,transaction) = RACObserve(self, transaction);
+}
+
+- (JCS_NetworkTransaction *)transaction {
+    return [self.jcs_params valueForKey:JCS_TABLE_ROW_DATA];
 }
 
 @end

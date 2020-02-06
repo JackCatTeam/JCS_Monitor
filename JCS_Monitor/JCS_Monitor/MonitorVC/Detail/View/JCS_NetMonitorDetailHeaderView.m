@@ -7,7 +7,7 @@
 //
 
 #import "JCS_NetMonitorDetailHeaderView.h"
-#import <JCS_Create/JCS_Create.h>
+#import <JCS_Kit/JCS_Kit.h>
 
 @interface JCS_NetMonitorDetailHeaderView()
 

@@ -7,10 +7,12 @@
 //
 
 #import "JCS_NetMonitorDetailContentVC.h"
-#import <JCS_Create/JCS_Create.h>
-#import <ReactiveObjC/ReactiveObjC.h>
+#import <JCS_Kit/JCS_Kit.h>
 
-@interface JCS_NetMonitorDetailContentVC ()<JCS_UITableViewDelegate>
+#import "JCS_NetworkTransaction.h"
+#import "JCS_NetworkUtility.h"
+
+@interface JCS_NetMonitorDetailContentVC ()
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray<JCS_TableSectionModel*> *sections;
@@ -36,8 +38,6 @@
     [UITableView jcs_createGroupTableView].jcs_layout(self.view, ^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }).jcs_toTableView()
-//    .jcs_dataSource(self)
-//    .jcs_delegate(self)
     .jcs_registerCellClasses(@[
         @"JCS_NetMonitorDetailSinglePlainTextCell",
         @"JCS_NetMonitorDetailRowsPlainTextCell",
@@ -48,30 +48,23 @@
     .jcs_estimatedRowHeight(30)
     .jcs_separatorNone()
     .jcs_configSections(self.sections)
-    .jcs_configDelegate(self)
+//    .jcs_configDelegate(self)
     .jcs_configDidSelectRowBlock(^(NSIndexPath*indexPath,JCS_TableRowModel*model){
-        JCS_LogInfo(@"");
+        
     })
     .jcs_associated(&_tableView);
     
 }
 
-- (void)addRow{
-    JCS_TableRowModel *row = [JCS_TableRowModel jcs_create];
-    row.data = @{@"title":[NSDate jcs_todayLongTimeString]};
-    row.cellClass = @"JCS_NetMonitorDetailRowsPlainTextCell";
-    row.cellHeight = 40;
-    [self.sections.lastObject.rows addObject:row];
-    [self.tableView reloadData];
-    [self aaaa:@"张三"];
-}
+#pragma mark - getter && setter
 
-- (void)aaaa:(NSString*)value {
-    JCS_LogInfo(@"---aaaa");
-}
-
-- (void)jcs_tableView:(UITableView*)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath didSelectModel:(JCS_TableRowModel *)didSelectModel {
-    JCS_LogInfo(@"");
+- (void)setTransaction:(JCS_NetworkTransaction *)transaction {
+    _transaction = transaction;
+    if(self.isResponse){
+        [self configResponseData];
+    } else {
+        [self configRequestData];
+    }
 }
 
 #pragma mark - 私有方法
@@ -79,57 +72,77 @@
 - (void)configRequestData {
     [self.sections removeAllObjects];
 
+    JCS_TableSectionModel *section = nil;
+    JCS_TableRowModel *row = nil;
+    
     //链接
-    JCS_TableSectionModel *section = [JCS_TableSectionModel jcs_create];
-    section.headerClass = @"JCS_NetMonitorDetailHeaderView";
-    section.headerHeight = 40;
-    section.data = @{@"title":@"链接"};
-    [_sections addObject:section];
-    
-    JCS_TableRowModel *row = [JCS_TableRowModel jcs_create];
-    row.data = @{@"title":@"/banner/getList/banner/getList/banner/getList/banner/getList/banner/getList/banner/getList/banner/getList/banner/getList/banner/getList.action"};
-    row.cellClass = @"JCS_NetMonitorDetailRowsPlainTextCell";
-    row.cellHeight = 40;
-    [section.rows addObject:row];
-    
-    //方法
-    section = [JCS_TableSectionModel jcs_create];
-    section.headerClass = @"JCS_NetMonitorDetailHeaderView";
-    section.headerHeight = 40;
-    section.data = @{@"title":@"方法"};
-    [_sections addObject:section];
-    
-    row = [JCS_TableRowModel jcs_create];
-    row.data = @{@"title":@"POST"};
-    row.cellClass = @"JCS_NetMonitorDetailSinglePlainTextCell";
-    row.cellHeight = 40;
-    [section.rows addObject:row];
+    {
+        section = [JCS_TableSectionModel jcs_create];
+        section.headerClass = @"JCS_NetMonitorDetailHeaderView";
+        section.headerHeight = 40;
+        section.data = @{@"title":@"相对链接"};
+        [_sections addObject:section];
+        
+        row = [JCS_TableRowModel jcs_create];
+        row.data = @{
+            @"title":[NSString stringWithFormat:@"%@ %@",self.transaction.request.HTTPMethod,self.transaction.relativeUrlString]
+        };
+        row.cellClass = @"JCS_NetMonitorDetailRowsPlainTextCell";
+        row.cellHeight = 40;
+        [section.rows addObject:row];
+    }
     
     //请求体
-    section = [JCS_TableSectionModel jcs_create];
-    section.headerClass = @"JCS_NetMonitorDetailHeaderView";
-    section.headerHeight = 40;
-    section.data = @{@"title":@"请求体"};
-    [_sections addObject:section];
+    {
+        if([self.transaction.request.HTTPMethod isEqualToString:@"POST"]){
+            section = [JCS_TableSectionModel jcs_create];
+            section.headerClass = @"JCS_NetMonitorDetailHeaderView";
+            section.headerHeight = 40;
+            section.data = @{@"title":@"请求体"};
+            [_sections addObject:section];
     
-    row = [JCS_TableRowModel jcs_create];
-    row.data = @{@"title":@"application/json"};
-    row.cellClass = @"JCS_NetMonitorDetailSingleArrowCell";
-    row.cellHeight = 40;
-    [section.rows addObject:row];
+            row = [JCS_TableRowModel jcs_create];
+            row.data = @{
+                @"title":[self.transaction.request.allHTTPHeaderFields valueForKey:@"content-type"],
+                @"subTitle":[NSByteCountFormatter stringFromByteCount:self.transaction.cachedRequestBody.length countStyle:NSByteCountFormatterCountStyleBinary]
+            };
+            row.cellClass = @"JCS_NetMonitorDetailSingleArrowCell";
+            row.cellHeight = 40;
+            [section.rows addObject:row];
+        }
+    }
     
     //请求头
-    section = [JCS_TableSectionModel jcs_create];
-    section.headerClass = @"JCS_NetMonitorDetailHeaderView";
-    section.headerHeight = 40;
-    section.data = @{@"title":@"请求头"};
-    [_sections addObject:section];
+    {
+        section = [JCS_TableSectionModel jcs_create];
+        section.headerClass = @"JCS_NetMonitorDetailHeaderView";
+        section.headerHeight = 40;
+        section.data = @{@"title":@"请求头"};
+        [_sections addObject:section];
+        
+        row = [JCS_TableRowModel jcs_create];
+        row.data = @{@"title":[self headerFieldsString:self.transaction.request.allHTTPHeaderFields]};
+        row.cellClass = @"JCS_NetMonitorDetailRowsPlainTextCell";
+        row.cellHeight = 40;
+        [section.rows addObject:row];
+    }
     
-    row = [JCS_TableRowModel jcs_create];
-    row.data = @{@"title":@"application/json"};
-    row.cellClass = @"JCS_NetMonitorDetailRowsPlainTextCell";
-    row.cellHeight = 40;
-    [section.rows addObject:row];
+    //全链接
+    {
+        section = [JCS_TableSectionModel jcs_create];
+        section.headerClass = @"JCS_NetMonitorDetailHeaderView";
+        section.headerHeight = 40;
+        section.data = @{@"title":@"全链接"};
+        [_sections addObject:section];
+        
+        row = [JCS_TableRowModel jcs_create];
+        row.data = @{
+            @"title":self.transaction.request.URL.absoluteString
+        };
+        row.cellClass = @"JCS_NetMonitorDetailRowsPlainTextCell";
+        row.cellHeight = 40;
+        [section.rows addObject:row];
+    }
     
     [self.tableView reloadData];
 }
@@ -140,32 +153,65 @@
     JCS_TableRowModel *row = nil;
     
     //响应体
-    section = [JCS_TableSectionModel jcs_create];
-    section.headerClass = @"JCS_NetMonitorDetailHeaderView";
-    section.headerHeight = 40;
-    section.data = @{@"title":@"响应体"};
-    [_sections addObject:section];
-    
-    row = [JCS_TableRowModel jcs_create];
-    row.data = @{@"title":@"application/json"};
-    row.cellClass = @"JCS_NetMonitorDetailSingleArrowCell";
-    row.cellHeight = 40;
-    [section.rows addObject:row];
+    {
+        section = [JCS_TableSectionModel jcs_create];
+        section.headerClass = @"JCS_NetMonitorDetailHeaderView";
+        section.headerHeight = 40;
+        section.data = @{@"title":@"响应体"};
+        [_sections addObject:section];
+        
+        row = [JCS_TableRowModel jcs_create];
+        row.data = @{
+            @"title":@"耗时",
+            @"subTitle":[JCS_NetworkUtility stringFromRequestDuration:self.transaction.duration]
+        };
+        row.cellClass = @"JCS_NetMonitorDetailSinglePlainTextCell";
+        row.cellHeight = 40;
+        [section.rows addObject:row];
+        
+        row = [JCS_TableRowModel jcs_create];
+        row.data = @{
+            @"title":self.transaction.response.MIMEType,
+            @"subTitle":[NSByteCountFormatter stringFromByteCount:self.transaction.receivedDataLength countStyle:NSByteCountFormatterCountStyleBinary]
+        };
+        row.cellClass = @"JCS_NetMonitorDetailSingleArrowCell";
+        row.cellHeight = 40;
+        [section.rows addObject:row];
+    }
     
     //响应头
-    section = [JCS_TableSectionModel jcs_create];
-    section.headerClass = @"JCS_NetMonitorDetailHeaderView";
-    section.headerHeight = 40;
-    section.data = @{@"title":@"响应头"};
-    [_sections addObject:section];
-    
-    row = [JCS_TableRowModel jcs_create];
-    row.data = @{@"title":@"application/json"};
-    row.cellClass = @"JCS_NetMonitorDetailRowsPlainTextCell";
-    row.cellHeight = 40;
-    [section.rows addObject:row];
+    {
+        section = [JCS_TableSectionModel jcs_create];
+        section.headerClass = @"JCS_NetMonitorDetailHeaderView";
+        section.headerHeight = 40;
+        section.data = @{@"title":@"响应头"};
+        [_sections addObject:section];
+        
+        NSHTTPURLResponse *response = (NSHTTPURLResponse*)self.transaction.response;
+        
+        row = [JCS_TableRowModel jcs_create];
+        row.data = @{@"title":[self headerFieldsString:response.allHeaderFields]};
+        row.cellClass = @"JCS_NetMonitorDetailRowsPlainTextCell";
+        row.cellHeight = 40;
+        [section.rows addObject:row];
+    }
     
     [self.tableView reloadData];
+}
+
+//将header解析为NSAttributeString
+- (NSString*)headerFieldsString:(NSDictionary*)headers {
+    NSMutableString *fieldsString = [NSMutableString string];
+    for (NSString *key in headers.allKeys) {
+        [fieldsString appendFormat:@"%@: %@\n",key,headers[key]];
+    }
+    if([fieldsString hasSuffix:@"\n"]){ //去掉最后\n
+        return [fieldsString stringByTrimmingCharactersInSet:NSMutableCharacterSet.whitespaceAndNewlineCharacterSet];
+    }
+    if(!fieldsString.jcs_isValid){
+        [fieldsString appendFormat:@"无"];
+    }
+    return [fieldsString copy];
 }
 
 @end

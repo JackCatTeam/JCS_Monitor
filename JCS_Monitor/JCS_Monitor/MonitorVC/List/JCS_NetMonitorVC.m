@@ -7,8 +7,7 @@
 //
 
 #import "JCS_NetMonitorVC.h"
-#import <ReactiveObjC/ReactiveObjC.h>
-#import <JCS_Create/JCS_Create.h>
+#import <JCS_Kit/JCS_Kit.h>
 #import "JCS_NetMonitorListCell.h"
 #import "JCS_NetMonitorDetailVC.h"
 #import "JCS_NetMonitorDetailContentVC.h"

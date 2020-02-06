@@ -7,29 +7,22 @@
 //
 
 #import "JCS_NetMonitorListCell.h"
-#import <JCS_Create/JCS_Create.h>
-#import <JCS_Category/JCS_Category.h>
+#import <JCS_Kit/JCS_Kit.h>
 
 #import "JCS_NetworkTransaction.h"
 #import "JCS_NetworkUtility.h"
 
 @interface JCS_NetMonitorListCell()
-/** <#备注#> **/
+
 @property (nonatomic, strong) UILabel *linkLabel;
-/** <#备注#> **/
 @property (nonatomic, strong) UILabel *mineTypeLabel;
-/** <#备注#> **/
 @property (nonatomic, strong) UIView *mineTypeView;
-/** <#备注#> **/
 @property (nonatomic, strong) UILabel *statusCodeLabel;
-/** <#备注#> **/
 @property (nonatomic, strong) UILabel *agentLabel;
-/** <#备注#> **/
 @property (nonatomic, strong) UILabel *hostLabel;
-/** <#备注#> **/
 @property (nonatomic, strong) UILabel *timeLabel;
-/** <#备注#> **/
 @property (nonatomic, strong) UIImageView *imageIV;
+
 @end
 
 @implementation JCS_NetMonitorListCell
@@ -126,7 +119,7 @@
     [super setData:data];
     
     //relativeString
-    self.linkLabel.text = [self relativeStringInTransaction:data];
+    self.linkLabel.text = data.relativeUrlString;
 
     //状态码
     self.statusCodeLabel.text = [self stateCodeWithTransaction:data];
@@ -141,25 +134,6 @@
     self.mineTypeLabel.text = [NSString stringWithFormat:@"%@ > %@",method,data.shortMIMEType];
     //缩略图
     self.imageIV.image = data.responseThumbnail;
-}
-
-///从transaction提取relativeString
-- (NSString*)relativeStringInTransaction:(JCS_NetworkTransaction*)transaction {
-    
-    //从absoluteString去除baseUrl
-    NSString *absoluteString = transaction.request.URL.absoluteString;
-    NSString *host = transaction.request.URL.host;
-    NSString *scheme = transaction.request.URL.scheme;
-    NSString *baseUrl = [NSString stringWithFormat:@"%@://%@",scheme,host];
-    NSString *relativeString = [absoluteString stringByReplacingOccurrencesOfString:baseUrl withString:@""];
-    
-    //从relativeString去除参数(?后面部分)
-    if([relativeString containsString:@"?"]){
-        NSRange range = [relativeString rangeOfString:@"?"];
-        relativeString = [relativeString substringToIndex:range.location];
-    }
-    
-    return relativeString;
 }
 
 - (NSString*)stateCodeWithTransaction:(JCS_NetworkTransaction*)transaction {

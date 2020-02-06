@@ -7,11 +7,13 @@
 //
 
 #import "JCS_NetMonitorDetailSinglePlainTextCell.h"
-#import <JCS_Create/JCS_Create.h>
+#import <JCS_Kit/JCS_Kit.h>
 
 @interface JCS_NetMonitorDetailSinglePlainTextCell()
 /** 标题 **/
 @property (nonatomic, strong) UILabel *titleLabel;
+/** 副标题 **/
+@property (nonatomic, strong) UILabel *subTitleLabel;
 @end
 
 @implementation JCS_NetMonitorDetailSinglePlainTextCell
@@ -26,6 +28,15 @@
         .jcs_fontSize(14)
         .jcs_textColorHex(0x222222)
         .jcs_associated(&_titleLabel);
+        
+        [UILabel jcs_create].jcs_layout(self.contentView, ^(MASConstraintMaker *make) {
+                    make.right.mas_equalTo(-10);
+                    make.centerY.equalTo(self.contentView);
+        }).jcs_toLabel()
+        .jcs_fontSize(14)
+        .jcs_textColorHex(0x222222)
+        .jcs_numberOfLines(0)
+        .jcs_associated(&_subTitleLabel);
     }
     return self;
 }
@@ -33,6 +44,7 @@
 - (void)setData:(id)data {
     [super setData:data];
     self.titleLabel.text = [data valueForKey:@"title"];
+    self.subTitleLabel.text = [data valueForKey:@"subTitle"];
 }
 
 @end

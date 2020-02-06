@@ -8,9 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
+@class JCS_NetworkTransaction;
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface JCS_NetMonitorDetailContentVC : UIViewController
+
+/** 是否是Reponse **/
+@property (nonatomic, assign) BOOL isResponse;
+
+@property (nonatomic, strong) JCS_NetworkTransaction *transaction;
 
 - (void)configRequestData;
 - (void)configResponseData;

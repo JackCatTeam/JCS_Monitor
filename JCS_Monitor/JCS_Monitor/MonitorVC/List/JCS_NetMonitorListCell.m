@@ -10,7 +10,8 @@
 #import <JCS_Create/JCS_Create.h>
 #import <JCS_Category/JCS_Category.h>
 
-#import "JCS_RequestInfo.h"
+#import "JCS_NetworkTransaction.h"
+#import "JCS_NetworkUtility.h"
 
 @interface JCS_NetMonitorListCell()
 /** <#备注#> **/
@@ -116,32 +117,79 @@
     self.imageIV.jcs_layout(self.contentView, ^(MASConstraintMaker *make) {
         make.right.mas_equalTo(-10);
         make.top.equalTo(self.mineTypeView);
-        make.bottom.equalTo(self.timeLabel);
+        make.bottom.mas_equalTo(-6);
         make.width.equalTo(self.imageIV.mas_height);
     });
 }
 
-- (void)setData:(JCS_RequestInfo*)data {
+- (void)setData:(JCS_NetworkTransaction*)data {
     [super setData:data];
     
-    self.linkLabel.text = data.request.URL.relativeString;
-    
-    self.statusCodeLabel.text = [NSString stringWithFormat:@"%zd",data.statusCode];
+    //relativeString
+    self.linkLabel.text = [self relativeStringInTransaction:data];
+
+    //状态码
+    self.statusCodeLabel.text = [self stateCodeWithTransaction:data];
+    //Agent
     self.agentLabel.text = [data.request valueForHTTPHeaderField:@"UserAgent"];
-    self.hostLabel.text = data.host;
-    self.timeLabel.text = [data.requestTime jcs_dateString:@"YYYY-MM-dd HH:mm:ss"];
+    //HOST
+    self.hostLabel.text = data.request.URL.host;
+    //请求时间
+    self.timeLabel.text = [data.startTime jcs_dateString:@"YYYY-MM-dd HH:mm:ss"];
+    //Method > MIMEType
+    NSString *method = data.request.HTTPMethod;
+    self.mineTypeLabel.text = [NSString stringWithFormat:@"%@ > %@",method,data.shortMIMEType];
+    //缩略图
+    self.imageIV.image = data.responseThumbnail;
+}
+
+///从transaction提取relativeString
+- (NSString*)relativeStringInTransaction:(JCS_NetworkTransaction*)transaction {
     
-    NSString *method = data.method;
-    NSString *contentType = data.responseContentType;
-    if(contentType.jcs_isBlank){
-        contentType = @"";
-    }
-    if([contentType.lowercaseString containsString:@"json"]){
-        contentType = @"json";
-    }
-    self.mineTypeLabel.text = [NSString stringWithFormat:@"%@ > %@",method,contentType];
+    //从absoluteString去除baseUrl
+    NSString *absoluteString = transaction.request.URL.absoluteString;
+    NSString *host = transaction.request.URL.host;
+    NSString *scheme = transaction.request.URL.scheme;
+    NSString *baseUrl = [NSString stringWithFormat:@"%@://%@",scheme,host];
+    NSString *relativeString = [absoluteString stringByReplacingOccurrencesOfString:baseUrl withString:@""];
     
-    self.imageIV.backgroundColor = [UIColor jcs_randomColor];
+    //从relativeString去除参数(?后面部分)
+    if([relativeString containsString:@"?"]){
+        NSRange range = [relativeString rangeOfString:@"?"];
+        relativeString = [relativeString substringToIndex:range.location];
+    }
+    
+    return relativeString;
+}
+
+- (NSString*)stateCodeWithTransaction:(JCS_NetworkTransaction*)transaction {
+    if (transaction.transactionState == JCS_NetworkTransactionStateFinished || transaction.transactionState == JCS_NetworkTransactionStateFailed) {
+        
+        NSMutableString *result = [NSMutableString string];
+        
+        //状态码
+        NSString *statusCodeString = [JCS_NetworkUtility statusCodeStringFromURLResponse:transaction.response];
+        [result appendString:statusCodeString];
+
+//        //接受数据大小
+//        if (transaction.receivedDataLength > 0) {
+//            NSString *responseSize = [NSByteCountFormatter stringFromByteCount:transaction.receivedDataLength countStyle:NSByteCountFormatterCountStyleBinary];
+//            [result appendFormat:@" %@",responseSize];
+//        }
+//
+//        //响应时间
+//        NSString *totalDuration = [JCS_NetworkUtility stringFromRequestDuration:transaction.duration];
+//        NSString *latency = [JCS_NetworkUtility stringFromRequestDuration:transaction.latency];
+//        NSString *duration = [NSString stringWithFormat:@"%@ (%@)", totalDuration, latency];
+//
+//        [result appendFormat:@" %@",duration];
+        
+        return [result copy];
+    }
+    
+    // Unstarted, Awaiting Response, Receiving Data, etc.
+    NSString *state = [JCS_NetworkTransaction readableStringFromTransactionState:transaction.transactionState];
+    return state;
 }
 
 @end

@@ -47,12 +47,13 @@ static NSString * const URLProtocolHandledKey = @"URLProtocolHandledKey";
     
     //看看是否已经处理过了，防止无限循环 根据业务来截取
     if ([NSURLProtocol propertyForKey: URLProtocolHandledKey inRequest:request]) {
+        NSLog(@"----canInitWithRequest -- NO %@",request);
         return NO;
     }
     
     NSString * scheme = [[request.URL scheme] lowercaseString];
     if ([scheme isEqual:@"http"] || [scheme isEqual:@"https"]) {
-        
+        NSLog(@"----canInitWithRequest -- YES %@",request);
         return YES;
     }
     
@@ -77,6 +78,7 @@ static NSString * const URLProtocolHandledKey = @"URLProtocolHandledKey";
     //标示该request已经处理过了，防止无限循环
     [NSURLProtocol setProperty:@(YES) forKey:URLProtocolHandledKey inRequest:mutableReqeust];
     
+    NSLog(@"----canInitWithRequest -- startLoading %@",mutableReqeust);
     //这个enableDebug随便根据自己的需求了，可以直接拦截到数据返回本地的模拟数据，进行测试
 //    BOOL enableDebug = NO;
 //    if (enableDebug) {
@@ -101,6 +103,8 @@ static NSString * const URLProtocolHandledKey = @"URLProtocolHandledKey";
         NSURLSessionDataTask *task = [self.session dataTaskWithRequest:mutableReqeust];
         [task resume];
 //    }
+    
+    
 }
 
 //结束请求
@@ -119,6 +123,9 @@ static NSString * const URLProtocolHandledKey = @"URLProtocolHandledKey";
     [self.client URLProtocol:self didLoadData:data];
     
     JCS_RequestInfo *requestInfo = [[JCS_RequestInfo alloc] init];
+    
+    NSLog(@"----canInitWithRequest -- didReceiveData.originalRequest %@",dataTask.originalRequest);
+    NSLog(@"----canInitWithRequest -- didReceiveData.currentRequest  %@",dataTask.currentRequest);
     
     //添加记录
     [[JCS_RequestStore sharedInstance] addNewRequest:requestInfo];

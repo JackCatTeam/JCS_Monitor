@@ -8,6 +8,9 @@
 
 #import "JCS_NetMonitorListCell.h"
 #import <JCS_Create/JCS_Create.h>
+#import <JCS_Category/JCS_Category.h>
+
+#import "JCS_RequestInfo.h"
 
 @interface JCS_NetMonitorListCell()
 /** <#备注#> **/
@@ -118,20 +121,23 @@
     });
 }
 
-- (void)setData:(NSDictionary*)data {
+- (void)setData:(JCS_RequestInfo*)data {
     [super setData:data];
     
-    self.linkLabel.text = [data valueForKey:@"link"];
+    self.linkLabel.text = data.request.URL.relativeString;
     
-    self.statusCodeLabel.text = [NSString stringWithFormat:@"%@",[data valueForKey:@"status"]];
-    self.agentLabel.text = [data valueForKey:@"agent"];
-    self.hostLabel.text = [data valueForKey:@"host"];
-    self.timeLabel.text = [data valueForKey:@"time"];
+    self.statusCodeLabel.text = [NSString stringWithFormat:@"%zd",data.statusCode];
+    self.agentLabel.text = [data.request valueForHTTPHeaderField:@"UserAgent"];
+    self.hostLabel.text = data.host;
+    self.timeLabel.text = [data.requestTime jcs_dateString:@"YYYY-MM-dd HH:mm:ss"];
     
-    NSString *method = [data valueForKey:@"method"];
-    NSString *contentType = [data valueForKey:@"contentType"];
+    NSString *method = data.method;
+    NSString *contentType = data.responseContentType;
     if(contentType.jcs_isBlank){
         contentType = @"";
+    }
+    if([contentType.lowercaseString containsString:@"json"]){
+        contentType = @"json";
     }
     self.mineTypeLabel.text = [NSString stringWithFormat:@"%@ > %@",method,contentType];
     

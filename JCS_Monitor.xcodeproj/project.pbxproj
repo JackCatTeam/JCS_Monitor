@@ -24,13 +24,11 @@
 		7D19843423D6E8B3005AAE92 /* JCS_NetMonitorDetailSingleArrowCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D19843323D6E8B3005AAE92 /* JCS_NetMonitorDetailSingleArrowCell.m */; };
 		7D3E58FD23D6906A009D473F /* JCS_NetMonitorVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D3E58FC23D6906A009D473F /* JCS_NetMonitorVC.m */; };
 		7D45A19323D68A6500FD2977 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D45A19223D68A6500FD2977 /* AppDelegate.m */; };
-		7D45A19623D68A6500FD2977 /* SceneDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D45A19523D68A6500FD2977 /* SceneDelegate.m */; };
 		7D45A19923D68A6500FD2977 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D45A19823D68A6500FD2977 /* ViewController.m */; };
 		7D45A19C23D68A6500FD2977 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D45A19A23D68A6500FD2977 /* Main.storyboard */; };
 		7D45A19E23D68A6700FD2977 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D45A19D23D68A6700FD2977 /* Assets.xcassets */; };
 		7D45A1A123D68A6700FD2977 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D45A19F23D68A6700FD2977 /* LaunchScreen.storyboard */; };
 		7D45A1A423D68A6700FD2977 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D45A1A323D68A6700FD2977 /* main.m */; };
-		7D70C44923E3FF5F00A80C63 /* JCS_RequestStore+MonitorDataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D70C44823E3FF5F00A80C63 /* JCS_RequestStore+MonitorDataSource.m */; };
 		7D8C5A1123DAB1D300F57E51 /* JCS_MonitorNavBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8C5A1023DAB1D300F57E51 /* JCS_MonitorNavBar.m */; };
 /* End PBXBuildFile section */
 
@@ -70,8 +68,6 @@
 		7D45A18E23D68A6500FD2977 /* JCS_Monitor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JCS_Monitor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7D45A19123D68A6500FD2977 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		7D45A19223D68A6500FD2977 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		7D45A19423D68A6500FD2977 /* SceneDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneDelegate.h; sourceTree = "<group>"; };
-		7D45A19523D68A6500FD2977 /* SceneDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneDelegate.m; sourceTree = "<group>"; };
 		7D45A19723D68A6500FD2977 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
 		7D45A19823D68A6500FD2977 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		7D45A19B23D68A6500FD2977 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -79,8 +75,6 @@
 		7D45A1A023D68A6700FD2977 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7D45A1A223D68A6700FD2977 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D45A1A323D68A6700FD2977 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		7D70C44723E3FF5F00A80C63 /* JCS_RequestStore+MonitorDataSource.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "JCS_RequestStore+MonitorDataSource.h"; sourceTree = "<group>"; };
-		7D70C44823E3FF5F00A80C63 /* JCS_RequestStore+MonitorDataSource.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "JCS_RequestStore+MonitorDataSource.m"; sourceTree = "<group>"; };
 		7D8C5A0F23DAB1D300F57E51 /* JCS_MonitorNavBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_MonitorNavBar.h; sourceTree = "<group>"; };
 		7D8C5A1023DAB1D300F57E51 /* JCS_MonitorNavBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_MonitorNavBar.m; sourceTree = "<group>"; };
 		92395A054C4B43932B697031 /* Pods-JCS_Monitor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JCS_Monitor.debug.xcconfig"; path = "Target Support Files/Pods-JCS_Monitor/Pods-JCS_Monitor.debug.xcconfig"; sourceTree = "<group>"; };
@@ -151,8 +145,6 @@
 			children = (
 				7D10466823E1990D0012D325 /* JCS_RequestStore.h */,
 				7D10466923E1990D0012D325 /* JCS_RequestStore.m */,
-				7D70C44723E3FF5F00A80C63 /* JCS_RequestStore+MonitorDataSource.h */,
-				7D70C44823E3FF5F00A80C63 /* JCS_RequestStore+MonitorDataSource.m */,
 			);
 			path = RequestStore;
 			sourceTree = "<group>";
@@ -221,8 +213,6 @@
 			children = (
 				7D45A19123D68A6500FD2977 /* AppDelegate.h */,
 				7D45A19223D68A6500FD2977 /* AppDelegate.m */,
-				7D45A19423D68A6500FD2977 /* SceneDelegate.h */,
-				7D45A19523D68A6500FD2977 /* SceneDelegate.m */,
 				7D45A19723D68A6500FD2977 /* ViewController.h */,
 				7D45A19823D68A6500FD2977 /* ViewController.m */,
 				7D45A19A23D68A6500FD2977 /* Main.storyboard */,
@@ -425,10 +415,8 @@
 				7D10466323E195010012D325 /* JCS_URLProtocol.m in Sources */,
 				7D10466A23E1990D0012D325 /* JCS_RequestStore.m in Sources */,
 				7D19842723D6E735005AAE92 /* JCS_NetMonitorDetailRowsPlainTextCell.m in Sources */,
-				7D70C44923E3FF5F00A80C63 /* JCS_RequestStore+MonitorDataSource.m in Sources */,
 				7D45A19323D68A6500FD2977 /* AppDelegate.m in Sources */,
 				7D45A1A423D68A6700FD2977 /* main.m in Sources */,
-				7D45A19623D68A6500FD2977 /* SceneDelegate.m in Sources */,
 				7D3E58FD23D6906A009D473F /* JCS_NetMonitorVC.m in Sources */,
 				7D19841623D6CFCC005AAE92 /* JCS_NetMonitorListCell.m in Sources */,
 				7D8C5A1123DAB1D300F57E51 /* JCS_MonitorNavBar.m in Sources */,

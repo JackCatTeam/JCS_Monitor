@@ -8,6 +8,8 @@
 
 #import "ViewController.h"
 #import "JCS_NetMonitorVC.h"
+#import "JCS_URLProtocol.h"
+//#import <FLEX/FLEX.h>
 
 @interface ViewController ()
 
@@ -17,6 +19,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+//    [JCS_URLProtocol startMonitor];
 }
 
 - (IBAction)showVC:(id)sender {
@@ -52,13 +55,17 @@
       if (error) {
         NSLog(@"%@", error);
       } else {
-        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
+//        NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;
         NSError *parseError = nil;
         NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];
         NSLog(@"%@",responseDictionary);
       }
     }];
     [dataTask resume];
+}
+
+- (IBAction)showFlex:(id)sender {
+//    [[FLEXManager sharedManager] showExplorer];
 }
 
 @end

@@ -9,13 +9,15 @@
 #import <Foundation/Foundation.h>
 
 @class JCS_RequestInfo;
+@class JCS_TableRowModel;
+@class JCS_TableSectionModel;
 
 NS_ASSUME_NONNULL_BEGIN
 
 @interface JCS_RequestStore : NSObject
 
 /** 需要显示的记录 **/
-@property (nonatomic, strong, readonly) NSArray<JCS_RequestInfo*> *displayRequests;
+@property (nonatomic, strong, readonly) NSArray<JCS_TableSectionModel*> *displayRequests;
 
 + (instancetype)sharedInstance;
 

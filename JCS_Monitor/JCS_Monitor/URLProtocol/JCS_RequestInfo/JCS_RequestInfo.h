@@ -29,6 +29,9 @@ NS_ASSUME_NONNULL_BEGIN
 @property (nonatomic, strong) NSDictionary *reqeustHeaders;
 /** <#备注#> **/
 @property (nonatomic, copy) NSString *requestContentType;
+/** 请求发出时间 **/
+@property (nonatomic, strong) NSDate *requestTime;
+
 
 /** <#备注#> **/
 @property (nonatomic, assign) NSInteger statusCode;

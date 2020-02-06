@@ -13,6 +13,8 @@
 #import "JCS_NetMonitorDetailVC.h"
 #import "JCS_NetMonitorDetailContentVC.h"
 
+#import "JCS_RequestStore.h"
+
 @interface JCS_NetMonitorVC ()
 
 /** <#备注#> **/
@@ -55,12 +57,10 @@
     [UITableView jcs_createPlainTableView].jcs_layout(self.view, ^(MASConstraintMaker *make) {
         make.edges.equalTo(self.view);
     }).jcs_toTableView()
-    .jcs_dataSource(self)
-    .jcs_delegate(self)
     .jcs_registerCellClass(@"JCS_NetMonitorListCell")
     .jcs_estimatedRowHeight(30)
     .jcs_separatorColorHex(0xD0D1D1)
-    .jcs_configSections(self.sections)
+    .jcs_configSections([JCS_RequestStore sharedInstance].displayRequests)
     .jcs_configDidSelectRowBlock(^(NSIndexPath*indexPath,JCS_TableRowModel*model){
         @strongify(self)
         JCS_NetMonitorDetailContentVC *vc = [[JCS_NetMonitorDetailContentVC alloc] init];
@@ -96,6 +96,10 @@
         
     }
     return _sections;
+}
+
+- (void)backhandler {
+    
 }
 
 @end

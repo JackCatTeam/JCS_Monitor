@@ -16,9 +16,6 @@ NS_ASSUME_NONNULL_BEGIN
 /** 导航栏 **/
 @property (nonatomic, strong) JCS_MonitorNavBar *navbar;
 
-///返回按钮
-- (void)backhandler;
-
 @end
 
 NS_ASSUME_NONNULL_END

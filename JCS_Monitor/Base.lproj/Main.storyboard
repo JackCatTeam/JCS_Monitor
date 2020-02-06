@@ -32,6 +32,14 @@
                                     <action selector="post_json_json:" destination="BYZ-38-t0r" eventType="touchUpInside" id="xT6-Wo-pbR"/>
                                 </connections>
                             </button>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hnz-ag-dML">
+                                <rect key="frame" x="35" y="210" width="30" height="30"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Flex"/>
+                                <connections>
+                                    <action selector="showFlex:" destination="BYZ-38-t0r" eventType="touchUpInside" id="tNk-M3-RG7"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>

@@ -32,6 +32,8 @@ NS_ASSUME_NONNULL_BEGIN
 + (NSArray<NSURLQueryItem *> *)itemsFromQueryString:(NSString *)query;
 + (BOOL)isValidJSONData:(NSData *)data;
 
++ (NSString *)stringByEscapingHTMLEntitiesInString:(NSString *)originalString;
+
 + (NSString *)prettyJSONStringFromData:(NSData *)data;
 
 + (NSData *)inflatedDataFromCompressedData:(NSData *)compressedData;

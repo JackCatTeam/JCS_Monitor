@@ -163,6 +163,37 @@
     return items.copy;
 }
 
++ (NSString *)stringByEscapingHTMLEntitiesInString:(NSString *)originalString {
+    static NSDictionary<NSString *, NSString *> *escapingDictionary = nil;
+    static NSRegularExpression *regex = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        escapingDictionary = @{ @" " : @"&nbsp;",
+                                @">" : @"&gt;",
+                                @"<" : @"&lt;",
+                                @"&" : @"&amp;",
+                                @"'" : @"&apos;",
+                                @"\"" : @"&quot;",
+                                @"«" : @"&laquo;",
+                                @"»" : @"&raquo;"
+                                };
+        regex = [NSRegularExpression regularExpressionWithPattern:@"(&|>|<|'|\"|«|»)" options:0 error:NULL];
+    });
+    
+    NSMutableString *mutableString = [originalString mutableCopy];
+    
+    NSArray<NSTextCheckingResult *> *matches = [regex matchesInString:mutableString options:0 range:NSMakeRange(0, mutableString.length)];
+    for (NSTextCheckingResult *result in matches.reverseObjectEnumerator) {
+        NSString *foundString = [mutableString substringWithRange:result.range];
+        NSString *replacementString = escapingDictionary[foundString];
+        if (replacementString) {
+            [mutableString replaceCharactersInRange:result.range withString:replacementString];
+        }
+    }
+    
+    return [mutableString copy];
+}
+
 + (BOOL)isValidJSONData:(NSData *)data {
     return [NSJSONSerialization JSONObjectWithData:data options:0 error:NULL] ? YES : NO;
 }
@@ -175,6 +206,7 @@
         prettyString = [NSString stringWithCString:[NSJSONSerialization dataWithJSONObject:jsonObject options:NSJSONWritingPrettyPrinted error:NULL].bytes encoding:NSUTF8StringEncoding];
         // NSJSONSerialization escapes forward slashes. We want pretty json, so run through and unescape the slashes.
         prettyString = [prettyString stringByReplacingOccurrencesOfString:@"\\/" withString:@"/"];
+        prettyString = [prettyString stringByReplacingOccurrencesOfString:@"  " withString:@" "];
     } else {
         prettyString = [NSString stringWithCString:data.bytes encoding:NSUTF8StringEncoding];
     }

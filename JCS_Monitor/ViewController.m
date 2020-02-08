@@ -45,7 +45,7 @@
 
 - (IBAction)post_json_json:(id)sender {
     
-    NSURL *url = [NSURL URLWithString:@"/flyfish-pre/banner/getList.action?title=lal" relativeToURL:[NSURL URLWithString:@"https://api.jiakeniu.com/"]];
+    NSURL *url = [NSURL URLWithString:@"https://api.jiakeniu.com/flyfish/goods/getPageList.action"];
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
       cachePolicy:NSURLRequestUseProtocolCachePolicy
@@ -53,10 +53,10 @@
     NSDictionary *headers = @{
       @"Content-Type": @"application/json"
     };
-        [request setHTTPMethod:@"POST"];
+    [request setHTTPMethod:@"POST"];
 
     [request setAllHTTPHeaderFields:headers];
-    NSData *postData = [[NSData alloc] initWithData:[@"{\n    \"type\":1\n}" dataUsingEncoding:NSUTF8StringEncoding]];
+    NSData *postData = [[NSData alloc] initWithData:[@"{\"pageNo\":1,\"pageSize\":200}" dataUsingEncoding:NSUTF8StringEncoding]];
     [request setHTTPBody:postData];
 
     NSURLSession *session = [NSURLSession sharedSession];

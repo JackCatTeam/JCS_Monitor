@@ -30,6 +30,7 @@
 		7D45A19E23D68A6700FD2977 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7D45A19D23D68A6700FD2977 /* Assets.xcassets */; };
 		7D45A1A123D68A6700FD2977 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7D45A19F23D68A6700FD2977 /* LaunchScreen.storyboard */; };
 		7D45A1A423D68A6700FD2977 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D45A1A323D68A6700FD2977 /* main.m */; };
+		7D883DC923EC4C6E00E50251 /* JCS_NetMonitorWebVC.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D883DC823EC4C6E00E50251 /* JCS_NetMonitorWebVC.m */; };
 		7D8C5A1123DAB1D300F57E51 /* JCS_MonitorNavBar.m in Sources */ = {isa = PBXBuildFile; fileRef = 7D8C5A1023DAB1D300F57E51 /* JCS_MonitorNavBar.m */; };
 /* End PBXBuildFile section */
 
@@ -77,6 +78,8 @@
 		7D45A1A023D68A6700FD2977 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7D45A1A223D68A6700FD2977 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		7D45A1A323D68A6700FD2977 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7D883DC723EC4C6E00E50251 /* JCS_NetMonitorWebVC.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_NetMonitorWebVC.h; sourceTree = "<group>"; };
+		7D883DC823EC4C6E00E50251 /* JCS_NetMonitorWebVC.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_NetMonitorWebVC.m; sourceTree = "<group>"; };
 		7D8C5A0F23DAB1D300F57E51 /* JCS_MonitorNavBar.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = JCS_MonitorNavBar.h; sourceTree = "<group>"; };
 		7D8C5A1023DAB1D300F57E51 /* JCS_MonitorNavBar.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = JCS_MonitorNavBar.m; sourceTree = "<group>"; };
 		92395A054C4B43932B697031 /* Pods-JCS_Monitor.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-JCS_Monitor.debug.xcconfig"; path = "Target Support Files/Pods-JCS_Monitor/Pods-JCS_Monitor.debug.xcconfig"; sourceTree = "<group>"; };
@@ -107,8 +110,8 @@
 		7D056E2923EBBE1100E55653 /* JCS_NetworkUtility */ = {
 			isa = PBXGroup;
 			children = (
-				7D056E2A23EBBE1100E55653 /* JCS_NetworkUtility.m */,
 				7D056E2B23EBBE1100E55653 /* JCS_NetworkUtility.h */,
+				7D056E2A23EBBE1100E55653 /* JCS_NetworkUtility.m */,
 			);
 			path = JCS_NetworkUtility;
 			sourceTree = "<group>";
@@ -161,6 +164,8 @@
 				7D19841823D6DF53005AAE92 /* JCS_NetMonitorDetailVC.m */,
 				7D19841C23D6E099005AAE92 /* JCS_NetMonitorDetailContentVC.h */,
 				7D19841D23D6E099005AAE92 /* JCS_NetMonitorDetailContentVC.m */,
+				7D883DC723EC4C6E00E50251 /* JCS_NetMonitorWebVC.h */,
+				7D883DC823EC4C6E00E50251 /* JCS_NetMonitorWebVC.m */,
 			);
 			path = Detail;
 			sourceTree = "<group>";
@@ -414,6 +419,7 @@
 				7D19842A23D6E756005AAE92 /* JCS_NetMonitorDetailHeaderFieldCell.m in Sources */,
 				7D45A19923D68A6500FD2977 /* ViewController.m in Sources */,
 				7D056E3823EC0C3400E55653 /* JCS_NetworkRecorder+TableRow.m in Sources */,
+				7D883DC923EC4C6E00E50251 /* JCS_NetMonitorWebVC.m in Sources */,
 				7D19842123D6E0EC005AAE92 /* JCS_NetMonitorDetailHeaderView.m in Sources */,
 				7D19842723D6E735005AAE92 /* JCS_NetMonitorDetailRowsPlainTextCell.m in Sources */,
 				7D056E3523EBBE1100E55653 /* JCS_NetworkRecorder.m in Sources */,

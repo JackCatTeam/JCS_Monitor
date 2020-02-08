@@ -11,8 +11,13 @@
 
 #import "JCS_NetworkTransaction.h"
 #import "JCS_NetworkUtility.h"
+#import "JCS_NetMonitorWebVC.h"
+#import "JCS_NetworkRecorder.h"
 
-@interface JCS_NetMonitorDetailContentVC ()
+#define kRequestBodyKey @"requestBody"
+#define kResponseBodyKey @"responseBody"
+
+@interface JCS_NetMonitorDetailContentVC ()<JCS_UITableViewDelegate>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray<JCS_TableSectionModel*> *sections;
@@ -48,12 +53,23 @@
     .jcs_estimatedRowHeight(30)
     .jcs_separatorNone()
     .jcs_configSections(self.sections)
-//    .jcs_configDelegate(self)
-    .jcs_configDidSelectRowBlock(^(NSIndexPath*indexPath,JCS_TableRowModel*model){
-        
-    })
+    .jcs_configDelegate(self)
     .jcs_associated(&_tableView);
     
+}
+
+#pragma mark - JCS_UITableViewDelegate
+
+- (void)jcs_tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath didSelectModel:(JCS_TableRowModel *)didSelectModel {
+    NSString *type = [didSelectModel.data valueForKey:@"type"];
+    if(type.jcs_isValid) {
+        
+        if([kRequestBodyKey isEqualToString:type]){
+            
+        } else if([kResponseBodyKey isEqualToString:type]){
+            [self showResponseBody];
+        }
+    }
 }
 
 #pragma mark - getter && setter
@@ -88,7 +104,6 @@
             @"title":[NSString stringWithFormat:@"%@ %@",self.transaction.request.HTTPMethod,self.transaction.relativeUrlString]
         };
         row.cellClass = @"JCS_NetMonitorDetailRowsPlainTextCell";
-        row.cellHeight = 40;
         [section.rows addObject:row];
     }
     
@@ -103,11 +118,11 @@
     
             row = [JCS_TableRowModel jcs_create];
             row.data = @{
+                @"type":kRequestBodyKey,
                 @"title":[self.transaction.request.allHTTPHeaderFields valueForKey:@"content-type"],
                 @"subTitle":[NSByteCountFormatter stringFromByteCount:self.transaction.cachedRequestBody.length countStyle:NSByteCountFormatterCountStyleBinary]
             };
             row.cellClass = @"JCS_NetMonitorDetailSingleArrowCell";
-            row.cellHeight = 40;
             [section.rows addObject:row];
         }
     }
@@ -123,7 +138,6 @@
         row = [JCS_TableRowModel jcs_create];
         row.data = @{@"title":[self headerFieldsString:self.transaction.request.allHTTPHeaderFields]};
         row.cellClass = @"JCS_NetMonitorDetailRowsPlainTextCell";
-        row.cellHeight = 40;
         [section.rows addObject:row];
     }
     
@@ -140,7 +154,6 @@
             @"title":self.transaction.request.URL.absoluteString
         };
         row.cellClass = @"JCS_NetMonitorDetailRowsPlainTextCell";
-        row.cellHeight = 40;
         [section.rows addObject:row];
     }
     
@@ -166,16 +179,15 @@
             @"subTitle":[JCS_NetworkUtility stringFromRequestDuration:self.transaction.duration]
         };
         row.cellClass = @"JCS_NetMonitorDetailSinglePlainTextCell";
-        row.cellHeight = 40;
         [section.rows addObject:row];
         
         row = [JCS_TableRowModel jcs_create];
         row.data = @{
+            @"type":kResponseBodyKey,
             @"title":self.transaction.response.MIMEType,
             @"subTitle":[NSByteCountFormatter stringFromByteCount:self.transaction.receivedDataLength countStyle:NSByteCountFormatterCountStyleBinary]
         };
         row.cellClass = @"JCS_NetMonitorDetailSingleArrowCell";
-        row.cellHeight = 40;
         [section.rows addObject:row];
     }
     
@@ -192,7 +204,6 @@
         row = [JCS_TableRowModel jcs_create];
         row.data = @{@"title":[self headerFieldsString:response.allHeaderFields]};
         row.cellClass = @"JCS_NetMonitorDetailRowsPlainTextCell";
-        row.cellHeight = 40;
         [section.rows addObject:row];
     }
     
@@ -212,6 +223,51 @@
         [fieldsString appendFormat:@"无"];
     }
     return [fieldsString copy];
+}
+
+- (void)showResponseBody {
+
+      NSData *responseData = [[JCS_NetworkRecorder defaultRecorder] cachedResponseBodyForTransaction:self.transaction];
+        if (responseData.length > 0) {
+            if ([JCS_NetworkUtility isValidJSONData:responseData]) {
+                JCS_NetMonitorWebVC *vc = [[JCS_NetMonitorWebVC alloc] init];
+                NSString *prettyJSON = [JCS_NetworkUtility prettyJSONStringFromData:responseData];
+                if (prettyJSON.length > 0) {
+                    vc.content = prettyJSON;
+                }
+                [self.jcs_currentVC.navigationController pushViewController:vc animated:YES];
+                
+//                } else if ([mimeType hasPrefix:@"image/"]) {
+//                    UIImage *image = [UIImage imageWithData:data];
+//                    detailViewController = [[FLEXImagePreviewViewController alloc] initWithImage:image];
+//                } else if ([mimeType isEqual:@"application/x-plist"]) {
+//                    id propertyList = [NSPropertyListSerialization propertyListWithData:data options:0 format:NULL error:NULL];
+//                    detailViewController = [[FLEXWebViewController alloc] initWithText:[propertyList description]];
+//                }
+            }
+        }
+}
+
+- (NSString*)getRequestPostBody {
+    NSString *bodyString = @"";
+    if (self.transaction.cachedRequestBody.length > 0) {
+        NSString *contentType = [self.transaction.request valueForHTTPHeaderField:@"Content-Type"];
+        if ([contentType hasPrefix:@"application/x-www-form-urlencoded"]) {
+            bodyString = [NSString stringWithCString:[self postBodyDataForTransaction].bytes encoding:NSUTF8StringEncoding];
+        }
+    }
+    return bodyString;
+}
+
+- (NSData *)postBodyDataForTransaction {
+    NSData *bodyData = self.transaction.cachedRequestBody;
+    if (bodyData.length > 0) {
+        NSString *contentEncoding = [self.transaction.request valueForHTTPHeaderField:@"Content-Encoding"];
+        if ([contentEncoding rangeOfString:@"deflate" options:NSCaseInsensitiveSearch].length > 0 || [contentEncoding rangeOfString:@"gzip" options:NSCaseInsensitiveSearch].length > 0) {
+            bodyData = [JCS_NetworkUtility inflatedDataFromCompressedData:bodyData];
+        }
+    }
+    return bodyData;
 }
 
 @end

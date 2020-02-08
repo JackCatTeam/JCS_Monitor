@@ -7,7 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import <JCS_Create.h>
+#import <JCS_Create/JCS_Create.h>
 
 // Notifications posted when the record is updated
 extern NSString *const kJCS_NetworkRecorderNewTransactionNotification;

@@ -14,10 +14,17 @@
 @interface JCS_NetMonitorWebVC ()
 
 @property (nonatomic, strong) WKWebView *webView;
+@property (nonatomic, copy) NSString *content;
 
 @end
 
 @implementation JCS_NetMonitorWebVC
+
++ (instancetype)monitorWebVC:(NSString*)content {
+    JCS_NetMonitorWebVC *instance = [[JCS_NetMonitorWebVC alloc] init];
+    instance.content = content;
+    return instance;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];

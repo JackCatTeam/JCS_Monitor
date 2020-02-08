@@ -8,11 +8,13 @@
 
 #import <UIKit/UIKit.h>
 
+#define MonitorWebVC(__CONTENT__) [JCS_NetMonitorWebVC monitorWebVC:__CONTENT__]
+
 NS_ASSUME_NONNULL_BEGIN
 
 @interface JCS_NetMonitorWebVC : UIViewController
 
-@property (nonatomic, copy) NSString *content;
++ (instancetype)monitorWebVC:(NSString*)content;
 
 @end
 

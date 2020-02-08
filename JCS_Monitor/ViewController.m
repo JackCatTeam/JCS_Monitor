@@ -107,7 +107,7 @@
 }
 
 - (IBAction)get_json:(id)sender {
-    NSURL *url = [NSURL URLWithString:@"/flyfish-pre/banner/getList-get.action?type=1" relativeToURL:[NSURL URLWithString:@"https://api.jiakeniu.com/"]];
+    NSURL *url = [NSURL URLWithString:@"/flyfish-pre/banner/getList-get.action?type=1&id=111" relativeToURL:[NSURL URLWithString:@"https://api.jiakeniu.com/"]];
 
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:url
       cachePolicy:NSURLRequestUseProtocolCachePolicy

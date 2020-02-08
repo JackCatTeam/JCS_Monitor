@@ -14,7 +14,11 @@
 #import "JCS_NetMonitorWebVC.h"
 #import "JCS_NetworkRecorder.h"
 
+#define kDidSelectedBlockKey @"kDidSelectedBlockKey"
+typedef UIViewController*(^DidSelectBlock)(void);
+
 #define kRequestBodyKey @"requestBody"
+#define kQueryStringKey @"queryString"
 #define kResponseBodyKey @"responseBody"
 
 @interface JCS_NetMonitorDetailContentVC ()<JCS_UITableViewDelegate>
@@ -52,6 +56,7 @@
     .jcs_registerSectionHeaderFooterClass(@"JCS_NetMonitorDetailHeaderView")
     .jcs_estimatedRowHeight(30)
     .jcs_separatorNone()
+//    .jcs_separatorColorHex(0x999999)
     .jcs_configSections(self.sections)
     .jcs_configDelegate(self)
     .jcs_associated(&_tableView);
@@ -61,13 +66,23 @@
 #pragma mark - JCS_UITableViewDelegate
 
 - (void)jcs_tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath didSelectModel:(JCS_TableRowModel *)didSelectModel {
-    NSString *type = [didSelectModel.data valueForKey:@"type"];
-    if(type.jcs_isValid) {
-        
-        if([kRequestBodyKey isEqualToString:type]){
-            
-        } else if([kResponseBodyKey isEqualToString:type]){
-            [self showResponseBody];
+//    NSString *type = [didSelectModel.data valueForKey:@"type"];
+//    if(type.jcs_isValid) {
+//
+//        if([kRequestBodyKey isEqualToString:type]){
+//
+//        } else if([kQueryStringKey isEqualToString:type]){
+//            [self showQueryString];
+//
+//        } else if([kResponseBodyKey isEqualToString:type]){
+//            [self showResponseBody];
+//        }
+//    }
+    DidSelectBlock didSelectBlock = [didSelectModel.data valueForKey:kDidSelectedBlockKey];
+    if(didSelectBlock){
+        UIViewController *vc = didSelectBlock();
+        if(vc){
+            [self.jcs_currentVC.navigationController pushViewController:vc animated:YES];
         }
     }
 }
@@ -109,7 +124,7 @@
     
     //请求体
     {
-        if([self.transaction.request.HTTPMethod isEqualToString:@"POST"]){
+        if(self.transaction.cachedRequestBody.length > 0){
             section = [JCS_TableSectionModel jcs_create];
             section.headerClass = @"JCS_NetMonitorDetailHeaderView";
             section.headerHeight = 40;
@@ -120,7 +135,28 @@
             row.data = @{
                 @"type":kRequestBodyKey,
                 @"title":[self.transaction.request.allHTTPHeaderFields valueForKey:@"content-type"],
-                @"subTitle":[NSByteCountFormatter stringFromByteCount:self.transaction.cachedRequestBody.length countStyle:NSByteCountFormatterCountStyleBinary]
+                @"subTitle":[NSByteCountFormatter stringFromByteCount:self.transaction.cachedRequestBody.length countStyle:NSByteCountFormatterCountStyleBinary],
+                kDidSelectedBlockKey:[self requestBodyBlock]
+            };
+            row.cellClass = @"JCS_NetMonitorDetailSingleArrowCell";
+            [section.rows addObject:row];
+        }
+    }
+    
+    //QueryString
+    {
+        if(self.transaction.request.URL.query.jcs_isValid){
+            section = [JCS_TableSectionModel jcs_create];
+            section.headerClass = @"JCS_NetMonitorDetailHeaderView";
+            section.headerHeight = 40;
+            section.data = @{@"title":@"QueryString"};
+            [_sections addObject:section];
+    
+            row = [JCS_TableRowModel jcs_create];
+            row.data = @{
+                @"type":kQueryStringKey,
+                @"title":@"QueryString",
+                kDidSelectedBlockKey:[self queryStringBlock]
             };
             row.cellClass = @"JCS_NetMonitorDetailSingleArrowCell";
             [section.rows addObject:row];
@@ -167,28 +203,32 @@
     
     //响应体
     {
-        section = [JCS_TableSectionModel jcs_create];
-        section.headerClass = @"JCS_NetMonitorDetailHeaderView";
-        section.headerHeight = 40;
-        section.data = @{@"title":@"响应体"};
-        [_sections addObject:section];
-        
-        row = [JCS_TableRowModel jcs_create];
-        row.data = @{
-            @"title":@"耗时",
-            @"subTitle":[JCS_NetworkUtility stringFromRequestDuration:self.transaction.duration]
-        };
-        row.cellClass = @"JCS_NetMonitorDetailSinglePlainTextCell";
-        [section.rows addObject:row];
-        
-        row = [JCS_TableRowModel jcs_create];
-        row.data = @{
-            @"type":kResponseBodyKey,
-            @"title":self.transaction.response.MIMEType,
-            @"subTitle":[NSByteCountFormatter stringFromByteCount:self.transaction.receivedDataLength countStyle:NSByteCountFormatterCountStyleBinary]
-        };
-        row.cellClass = @"JCS_NetMonitorDetailSingleArrowCell";
-        [section.rows addObject:row];
+        if(self.transaction.receivedDataLength > 0){
+            section = [JCS_TableSectionModel jcs_create];
+            section.headerClass = @"JCS_NetMonitorDetailHeaderView";
+            section.headerHeight = 40;
+            section.data = @{@"title":@"响应体"};
+            [_sections addObject:section];
+            
+            row = [JCS_TableRowModel jcs_create];
+            row.data = @{
+                @"title":@"耗时",
+                @"showSeparator":@(YES),
+                @"subTitle":[JCS_NetworkUtility stringFromRequestDuration:self.transaction.duration]
+            };
+            row.cellClass = @"JCS_NetMonitorDetailSinglePlainTextCell";
+            [section.rows addObject:row];
+            
+            row = [JCS_TableRowModel jcs_create];
+            row.data = @{
+                @"type":kResponseBodyKey,
+                @"title":self.transaction.response.MIMEType,
+                @"subTitle":[NSByteCountFormatter stringFromByteCount:self.transaction.receivedDataLength countStyle:NSByteCountFormatterCountStyleBinary],
+                kDidSelectedBlockKey:[self responseBodyBlock]
+            };
+            row.cellClass = @"JCS_NetMonitorDetailSingleArrowCell";
+            [section.rows addObject:row];
+        }
     }
     
     //响应头
@@ -210,6 +250,76 @@
     [self.tableView reloadData];
 }
 
+#pragma mark - 设置didSelectBlock
+
+///显示QueryString
+- (DidSelectBlock)queryStringBlock {
+    return ^UIViewController*{
+        NSString *queryString = self.transaction.request.URL.query;
+        queryString = [queryString stringByReplacingOccurrencesOfString:@"&" withString:@"\n&\n"];
+        return MonitorWebVC(queryString);
+    };
+}
+
+///显示requestBody
+- (DidSelectBlock)requestBodyBlock {
+    return ^UIViewController*{
+        NSString *contentType = [self.transaction.request valueForHTTPHeaderField:@"Content-Type"];
+        NSData *bodyData = [self postBodyDataForTransaction];
+        
+        //form
+        if ([contentType hasPrefix:@"application/x-www-form-urlencoded"]) {
+            NSString *bodyString = [NSString stringWithCString:bodyData.bytes encoding:NSUTF8StringEncoding];
+            bodyString = [bodyString stringByReplacingOccurrencesOfString:@"&" withString:@"\n&\n"];
+            return MonitorWebVC(bodyString);
+        }
+        
+        //json
+        if([JCS_NetworkUtility isValidJSONData:bodyData]) {
+            NSString *prettyJSON = [JCS_NetworkUtility prettyJSONStringFromData:bodyData];
+            if (prettyJSON.length > 0) {
+                return MonitorWebVC(prettyJSON);
+            }
+        }
+        
+        return nil;
+    };
+}
+
+///显示responseBody
+- (DidSelectBlock)responseBodyBlock {
+    return ^UIViewController*{
+        NSString *mimeType = self.transaction.response.MIMEType;
+        NSData *bodyData = [[JCS_NetworkRecorder defaultRecorder] cachedResponseBodyForTransaction:self.transaction];
+        
+        //json
+        if([JCS_NetworkUtility isValidJSONData:bodyData]) {
+            NSString *prettyJSON = [JCS_NetworkUtility prettyJSONStringFromData:bodyData];
+            if (prettyJSON.length > 0) {
+                return MonitorWebVC(prettyJSON);
+            }
+        }
+        
+        //image
+        if ([mimeType hasPrefix:@"image/"]) {
+            return nil;
+        }
+        
+        //application/x-plist
+        if ([mimeType hasPrefix:@"application/x-plist"]) {
+            id propertyList = [NSPropertyListSerialization propertyListWithData:bodyData options:0 format:NULL error:NULL];
+            return MonitorWebVC([propertyList description]);
+        }
+        
+        NSString *text = [[NSString alloc] initWithData:bodyData encoding:NSUTF8StringEncoding];
+        if (text.length > 0) {
+            return MonitorWebVC(text);
+        }
+        
+        return nil;
+    };
+}
+
 //将header解析为NSAttributeString
 - (NSString*)headerFieldsString:(NSDictionary*)headers {
     NSMutableString *fieldsString = [NSMutableString string];
@@ -223,40 +333,6 @@
         [fieldsString appendFormat:@"无"];
     }
     return [fieldsString copy];
-}
-
-- (void)showResponseBody {
-
-      NSData *responseData = [[JCS_NetworkRecorder defaultRecorder] cachedResponseBodyForTransaction:self.transaction];
-        if (responseData.length > 0) {
-            if ([JCS_NetworkUtility isValidJSONData:responseData]) {
-                JCS_NetMonitorWebVC *vc = [[JCS_NetMonitorWebVC alloc] init];
-                NSString *prettyJSON = [JCS_NetworkUtility prettyJSONStringFromData:responseData];
-                if (prettyJSON.length > 0) {
-                    vc.content = prettyJSON;
-                }
-                [self.jcs_currentVC.navigationController pushViewController:vc animated:YES];
-                
-//                } else if ([mimeType hasPrefix:@"image/"]) {
-//                    UIImage *image = [UIImage imageWithData:data];
-//                    detailViewController = [[FLEXImagePreviewViewController alloc] initWithImage:image];
-//                } else if ([mimeType isEqual:@"application/x-plist"]) {
-//                    id propertyList = [NSPropertyListSerialization propertyListWithData:data options:0 format:NULL error:NULL];
-//                    detailViewController = [[FLEXWebViewController alloc] initWithText:[propertyList description]];
-//                }
-            }
-        }
-}
-
-- (NSString*)getRequestPostBody {
-    NSString *bodyString = @"";
-    if (self.transaction.cachedRequestBody.length > 0) {
-        NSString *contentType = [self.transaction.request valueForHTTPHeaderField:@"Content-Type"];
-        if ([contentType hasPrefix:@"application/x-www-form-urlencoded"]) {
-            bodyString = [NSString stringWithCString:[self postBodyDataForTransaction].bytes encoding:NSUTF8StringEncoding];
-        }
-    }
-    return bodyString;
 }
 
 - (NSData *)postBodyDataForTransaction {

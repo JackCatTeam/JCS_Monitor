@@ -68,11 +68,6 @@
     .jcs_separatorColorHex(0xD0D1D1)
     .jcs_tableFooterView([UIView jcs_create])
     .jcs_configSections([JCS_NetworkRecorder defaultRecorder].sections)
-    .jcs_configDidSelectRowBlock(^(NSIndexPath*indexPath,JCS_TableRowModel*model){
-        @strongify(self)
-        JCS_NetMonitorDetailContentVC *vc = [[JCS_NetMonitorDetailContentVC alloc] init];
-        [self.navigationController pushViewController:vc animated:YES];
-    })
     .jcs_associated(&_tableView);
     
 }

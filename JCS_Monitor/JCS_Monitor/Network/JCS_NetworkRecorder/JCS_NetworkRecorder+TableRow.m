@@ -14,7 +14,7 @@
     JCS_TableRowModel *row = [JCS_TableRowModel jcs_create];
     row.data = transaction;
     row.cellClass = @"JCS_NetMonitorListCell";
-    row.clickRouter = @"jcs://MonitorRouter/showRequestDetail:";
+    row.clickRouter = @"jcs://JCS_NetMonitorDetailVC";
     [self.sections.firstObject.rows insertObject:row atIndex:0];
 }
 - (void)clearAllTransactions {

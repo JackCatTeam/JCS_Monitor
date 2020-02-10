@@ -21,7 +21,7 @@ typedef UIViewController*(^DidSelectBlock)(void);
 #define kQueryStringKey @"queryString"
 #define kResponseBodyKey @"responseBody"
 
-@interface JCS_NetMonitorDetailContentVC ()<JCS_UITableViewDelegate>
+@interface JCS_NetMonitorDetailContentVC ()<JCS_ConfigTableViewProtocol>
 
 @property (nonatomic, strong) UITableView *tableView;
 @property (nonatomic, strong) NSMutableArray<JCS_TableSectionModel*> *sections;
@@ -57,28 +57,16 @@ typedef UIViewController*(^DidSelectBlock)(void);
     .jcs_estimatedRowHeight(30)
     .jcs_separatorNone()
 //    .jcs_separatorColorHex(0x999999)
+    .jcs_customerDelegate(self)
     .jcs_configSections(self.sections)
-    .jcs_configDelegate(self)
     .jcs_associated(&_tableView);
     
 }
 
 #pragma mark - JCS_UITableViewDelegate
 
-- (void)jcs_tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath didSelectModel:(JCS_TableRowModel *)didSelectModel {
-//    NSString *type = [didSelectModel.data valueForKey:@"type"];
-//    if(type.jcs_isValid) {
-//
-//        if([kRequestBodyKey isEqualToString:type]){
-//
-//        } else if([kQueryStringKey isEqualToString:type]){
-//            [self showQueryString];
-//
-//        } else if([kResponseBodyKey isEqualToString:type]){
-//            [self showResponseBody];
-//        }
-//    }
-    DidSelectBlock didSelectBlock = [didSelectModel.data valueForKey:kDidSelectedBlockKey];
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
+    DidSelectBlock didSelectBlock = [self.sections[indexPath.section].rows[indexPath.row].data valueForKey:kDidSelectedBlockKey];
     if(didSelectBlock){
         UIViewController *vc = didSelectBlock();
         if(vc){
@@ -111,7 +99,7 @@ typedef UIViewController*(^DidSelectBlock)(void);
         section = [JCS_TableSectionModel jcs_create];
         section.headerClass = @"JCS_NetMonitorDetailHeaderView";
         section.headerHeight = 40;
-        section.data = @{@"title":@"相对链接"};
+        section.headerData = @{@"title":@"相对链接"};
         [_sections addObject:section];
         
         row = [JCS_TableRowModel jcs_create];
@@ -128,7 +116,7 @@ typedef UIViewController*(^DidSelectBlock)(void);
             section = [JCS_TableSectionModel jcs_create];
             section.headerClass = @"JCS_NetMonitorDetailHeaderView";
             section.headerHeight = 40;
-            section.data = @{@"title":@"请求体"};
+            section.headerData = @{@"title":@"请求体"};
             [_sections addObject:section];
     
             row = [JCS_TableRowModel jcs_create];
@@ -149,7 +137,7 @@ typedef UIViewController*(^DidSelectBlock)(void);
             section = [JCS_TableSectionModel jcs_create];
             section.headerClass = @"JCS_NetMonitorDetailHeaderView";
             section.headerHeight = 40;
-            section.data = @{@"title":@"QueryString"};
+            section.headerData = @{@"title":@"QueryString"};
             [_sections addObject:section];
     
             row = [JCS_TableRowModel jcs_create];
@@ -168,7 +156,7 @@ typedef UIViewController*(^DidSelectBlock)(void);
         section = [JCS_TableSectionModel jcs_create];
         section.headerClass = @"JCS_NetMonitorDetailHeaderView";
         section.headerHeight = 40;
-        section.data = @{@"title":@"请求头"};
+        section.headerData = @{@"title":@"请求头"};
         [_sections addObject:section];
         
         row = [JCS_TableRowModel jcs_create];
@@ -182,7 +170,7 @@ typedef UIViewController*(^DidSelectBlock)(void);
         section = [JCS_TableSectionModel jcs_create];
         section.headerClass = @"JCS_NetMonitorDetailHeaderView";
         section.headerHeight = 40;
-        section.data = @{@"title":@"全链接"};
+        section.headerData = @{@"title":@"全链接"};
         [_sections addObject:section];
         
         row = [JCS_TableRowModel jcs_create];
@@ -207,7 +195,7 @@ typedef UIViewController*(^DidSelectBlock)(void);
             section = [JCS_TableSectionModel jcs_create];
             section.headerClass = @"JCS_NetMonitorDetailHeaderView";
             section.headerHeight = 40;
-            section.data = @{@"title":@"响应体"};
+            section.headerData = @{@"title":@"响应体"};
             [_sections addObject:section];
             
             row = [JCS_TableRowModel jcs_create];
@@ -236,7 +224,7 @@ typedef UIViewController*(^DidSelectBlock)(void);
         section = [JCS_TableSectionModel jcs_create];
         section.headerClass = @"JCS_NetMonitorDetailHeaderView";
         section.headerHeight = 40;
-        section.data = @{@"title":@"响应头"};
+        section.headerData = @{@"title":@"响应头"};
         [_sections addObject:section];
         
         NSHTTPURLResponse *response = (NSHTTPURLResponse*)self.transaction.response;

@@ -76,7 +76,7 @@
 }
 
 - (JCS_NetworkTransaction *)transaction {
-    return [self.jcs_params valueForKey:JCS_TABLE_ROW_DATA];
+    return [self.jcs_params valueForKey:JCS_ROUTER_DATA];
 }
 
 @end
